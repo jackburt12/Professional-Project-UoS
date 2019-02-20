@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/filter_drawer"
+        android:icon="@drawable/ic_filter"
+        android:title="Filter"/>
+
+    <item
+        android:id="@+id/category_filter"
+        android:orderInCategory="0"
+        android:title="Category">
+        <menu>
+            <group android:checkableBehavior="all"
+                android:id="@+id/category_group">
+                <item
+                    android:id="@+id/category_fruit"
+                    android:title="Fruit"
+                    app:actionLayout="@layout/styled_checkbox" />
+                <item
+                    android:id="@+id/category_veg"
+                    android:title="Vegetable"
+                    app:actionLayout="@layout/styled_checkbox"/>
+                <item
+                    android:id="@+id/category_herb"
+                    android:title="Herb"
+                    app:actionLayout="@layout/styled_checkbox"/>
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/plot_filter"
+        android:orderInCategory="1"
+        android:title="Plot Size">
+        <menu>
+            <group android:checkableBehavior="all"
+                android:id="@+id/plot_group">
+                <item
+                    android:id="@+id/plot_small"
+                    android:title="Small" />
+                <item
+                    android:id="@+id/plot_medium"
+                    android:title="Medium" />
+                <item
+                    android:id="@+id/plot_large"
+                    android:title="Large" />
+            </group>
+        </menu>
+    </item>
+    <item android:menuCategory="container"
+        android:id="@+id/care_filter"
+        android:orderInCategory="2"
+        android:title="Frequency of Care">
+        <menu>
+            <item
+                android:checkable="true"
+                android:id="@+id/care_occasionally"
+                android:title="Occasionally" />
+            <item
+                android:checkable="true"
+                android:id="@+id/care_monthly"
+                android:title="Monthly" />
+            <item
+                android:checkable="true"
+                android:id="@+id/care_fortnightly"
+                android:title="Fortnightly" />
+            <item
+                android:checkable="true"
+                android:id="@+id/care_weekly"
+                android:title="Weekly" />
+            <item
+                android:id="@+id/care_daily"
+                android:title="Daily" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/expertise_filter"
+        android:orderInCategory="3"
+        android:title="Level of Expertise">
+        <menu>
+            <item
+                android:checkable="true"
+                android:id="@+id/expertise_beginner"
+                android:title="Beginner" />
+            <item
+                android:checkable="true"
+                android:id="@+id/expertise_easy"
+                android:title="Easy" />
+            <item
+                android:checkable="true"
+                android:id="@+id/expertise_medium"
+                android:title="Medium" />
+            <item
+                android:checkable="true"
+                android:id="@+id/expertise_hard"
+                android:title="Hard" />
+            <item
+                android:checkable="true"
+                android:id="@+id/expert_expert"
+                android:title="Expert" />
+        </menu>
+    </item>
+
+</menu>

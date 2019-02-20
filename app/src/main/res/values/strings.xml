@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">Final Year Project</string>
+    <string name="app_name">RHS Experience</string>
+    <string name="text_encyclopedia">Encyclopedia</string>
+    <string name="text_walks">Walks</string>
+    <string name="text_garden">Garden</string>
+
+    <!--titles-->
+    <string name="garden">My Garden</string>
+    <string name="encyclopedia">Encyclopedia</string>
+    <string name="walks">Walks</string>
+
+    <string name="hello_garden_fragment">Garden Fragment</string>
+    <string name="hello_encyclopedia_fragment">Encyclopedia Fragment</string>
+    <string name="hello_walks_fragment">Walks Fragment</string>
+
+    <string name="search">Search Encyclopedia</string>
 </resources>
