@@ -1,23 +1,62 @@
 package com3001.jb01026.finalyearproject.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com3001.jb01026.finalyearproject.R;
+import com3001.jb01026.finalyearproject.model.Plant;
+import com3001.jb01026.finalyearproject.model.PlotSize;
 
 public class PlantFragment extends Fragment {
 
+    Plant plant;
+
+    ImageView plantImageIV;
+    TextView plantTitleTV, plantDescriptionTV, plotFieldTV, careFieldTV, expertiseFieldTV;
+
+
     public PlantFragment() {
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_plant, container, false);
+        View view = inflater.inflate(R.layout.fragment_plant, container, false);
+
+        plantImageIV = view.findViewById(R.id.plant_image);
+        plantTitleTV = view.findViewById(R.id.plant_title);
+        plantDescriptionTV = view.findViewById(R.id.plant_description);
+
+        Bundle bundle = getArguments();
+        plant = (Plant) bundle.getSerializable("plant");
+
+        plantTitleTV.setText(plant.getName());
+        plantDescriptionTV.setText(plant.getDescription());
+
+        String s = "img_" + plant.getImageID();
+        plantImageIV.setImageResource(getContext().getResources().getIdentifier(s, "drawable", getContext().getPackageName()));
+
+        plotFieldTV = view.findViewById(R.id.plot_field);
+        careFieldTV = view.findViewById(R.id.care_field);
+        expertiseFieldTV = view.findViewById(R.id.expertise_field);
+
+        Log.v("PLOTSIZE: ", plant.getName().toString());
+
+
+        plotFieldTV.setText(plant.getPlotSize().toString());
+        careFieldTV.setText(plant.getCareFrequency().toString());
+        expertiseFieldTV.setText(plant.getExpertise().toString());
+
+
+        return view;
     }
 }

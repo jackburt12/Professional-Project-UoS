@@ -32,13 +32,19 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
     private ArrayList<Plant> filteredList;
     private Context context;
     private String emptyMessage = "No matches!";
+    private AdapterView.OnItemClickListener onItemClickListener;
+
 
     @Override
     public Character getCharacterForElement(int element) {
         if(getValidList().size()!=0){
-            return AddDividers(getValidList()).get(element).getName().charAt(0);
+            return getValidList().get(element).getName().charAt(0);
         }
         return null;
+    }
+
+    public Plant getItem(int position) {
+        return getValidList().get(position);
     }
 
     @Override
@@ -79,7 +85,7 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
         };
     }
 
-    public static class CustomViewHolder extends RecyclerView.ViewHolder {
+    public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView name;
         TextView type;
         ImageView thumbnail;
@@ -92,17 +98,28 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
             thumbnail = (ImageView) itemView.findViewById(R.id.item_icon);
 
             divider = (TextView) itemView.findViewById(R.id.encyclopedia_divider_letter);
+
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            onItemClickListener.onItemClick(null, v, getAdapterPosition(), v.getId());
+
         }
     }
 
-    public CustomRecyclerAdapter(ArrayList<Plant> plantList) {
+    public CustomRecyclerAdapter(AdapterView.OnItemClickListener onItemClickListener, ArrayList<Plant> plantList) {
         this.plantList = plantList;
+        this.onItemClickListener = onItemClickListener;
+
     }
 
     @Override
     public int getItemViewType(int position) {
         int viewType;
-        if(AddDividers(getValidList()).get(position).getType() == PlantType.DIVIDER) {
+        if(getValidList().get(position).getType() == PlantType.DIVIDER) {
             viewType = 1;
         } else {
             viewType = 0;
@@ -114,6 +131,7 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
     @NonNull
     @Override
     public CustomRecyclerAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         context = parent.getContext();
         View plantView = LayoutInflater.from(context).inflate(R.layout.encyclopedia_item, parent, false);
         View letterView = LayoutInflater.from(context).inflate(R.layout.encyclopedia_divider, parent, false);
@@ -130,7 +148,7 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-        ArrayList<Plant> finalList = AddDividers(getValidList());
+        ArrayList<Plant> finalList = getValidList();
 
         Plant p = finalList.get(position);
         if(p.getType() == PlantType.DIVIDER) {
@@ -138,14 +156,14 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
         } else {
             holder.name.setText(p.getName());
             holder.type.setText(p.getType().toString());
-            String s = "tn_" + AddDividers(getValidList()).get(position).getImageID();
+            String s = "tn_" + getValidList().get(position).getImageID();
             holder.thumbnail.setImageResource(context.getResources().getIdentifier(s, "drawable", context.getPackageName()));
         }
     }
 
     @Override
     public int getItemCount() {
-        return AddDividers((getValidList())).size();
+        return (getValidList()).size();
     }
 
 
@@ -169,10 +187,10 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
 
     private ArrayList<Plant> getValidList() {
         if(filteredList!= null) {
-            return filteredList;
+            return AddDividers(filteredList);
         } else {
-            return plantList;
+            return AddDividers(plantList);
         }
     }
-    
+
 }

@@ -1,6 +1,8 @@
 package com3001.jb01026.finalyearproject.model;
 
-public class Plant {
+import java.io.Serializable;
+
+public class Plant implements Serializable {
 
     private String name;
     private PlantType type;
@@ -12,9 +14,9 @@ public class Plant {
     private CareFrequency careFrequency;
     private Expertise expertise;
 
-    private int monthByMonth;
+    private String monthByMonth;
 
-    public Plant(String name, PlantType type, String imageID, String description, PlotSize plotSize, CareFrequency careFrequency, Expertise expertise, int monthByMonth) {
+    public Plant(String name, PlantType type, String imageID, String description, PlotSize plotSize, CareFrequency careFrequency, Expertise expertise, String monthByMonth) {
         this.name = name;
         this.type = type;
         this.image = imageID;
@@ -59,7 +61,7 @@ public class Plant {
         return expertise;
     }
 
-    public int getMonthByMonth() {
+    public String getMonthByMonth() {
         return monthByMonth;
     }
 
@@ -67,4 +69,5 @@ public class Plant {
         if(this.getName().charAt(0) == b.getName().charAt(0)) return false;
         else return true;
     }
+
 }

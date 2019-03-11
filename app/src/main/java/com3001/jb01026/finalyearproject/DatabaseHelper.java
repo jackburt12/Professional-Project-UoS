@@ -77,13 +77,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try {
             while ((line = buffer.readLine()) != null) {
-                String[] columns = line.split(",");
-//                TODO: This should work...
-//                if (columns.length != EXPECTED_COLUMNS) {
-//                    Log.d("IT FUCKED UP WITH NUMBER OF EXPECTED COLUMNS", Integer.toString(columns.length));
-//                    break;
-//                }
-                ContentValues cv = new ContentValues(6);
+                String[] columns = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                columns[3]=columns[3].substring(1, columns[3].length()-1);
+
+                ContentValues cv = new ContentValues(8);
                 cv.put(COL_2, columns[0].trim());
                 cv.put(COL_3, columns[1].trim());
                 cv.put(COL_4, columns[2].trim());

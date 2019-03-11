@@ -13,9 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
@@ -28,13 +30,17 @@ import java.util.ArrayList;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com3001.jb01026.finalyearproject.DatabaseHelper;
 import com3001.jb01026.finalyearproject.R;
 import com3001.jb01026.finalyearproject.adapter.CustomRecyclerAdapter;
+import com3001.jb01026.finalyearproject.model.CareFrequency;
+import com3001.jb01026.finalyearproject.model.Expertise;
 import com3001.jb01026.finalyearproject.model.Plant;
 import com3001.jb01026.finalyearproject.model.PlantType;
+import com3001.jb01026.finalyearproject.model.PlotSize;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,7 +50,8 @@ import com3001.jb01026.finalyearproject.model.PlantType;
  * Use the {@link EncyclopediaFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EncyclopediaFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener {
+public class EncyclopediaFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener  {
+    private final static String PLANT_FRAGMENT = "PLANT_FRAGMENT";
 
     ArrayList<Plant> plantList = new ArrayList<Plant>();
     private DatabaseHelper dbHelper;
@@ -55,6 +62,7 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
     ImageView filterButton;
     DrawerLayout filterDrawer;
 
+    CustomRecyclerAdapter customRecyclerAdapter;
 
     View rootView;
 
@@ -102,7 +110,7 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
             db = dbHelper.getWritableDatabase();
             Log.d("DID GET WRITABLE DATABASE", "yay");
 
-            Cursor c = db.rawQuery("SELECT Name, Type, Image FROM Plants", null);
+            Cursor c = db.rawQuery("SELECT * FROM Plants", null);
 
             if(c!=null) {
                 if(c.moveToFirst()) {
@@ -110,10 +118,14 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
                         String name = c.getString(c.getColumnIndex("Name"));
                         String type = c.getString(c.getColumnIndex("Type"));
                         String image = c.getString(c.getColumnIndex("Image"));
+                        String description = c.getString(c.getColumnIndex("Description"));
+                        int plotSize = c.getInt(c.getColumnIndex("PlotSize"));
+                        int careFrequency = c.getInt(c.getColumnIndex("CareFreq"));
+                        int expertise = c.getInt(c.getColumnIndex("Expertise"));
+                        String monthByMonth = c.getString(c.getColumnIndex("MonthByMonth"));
 
 
                         PlantType pType = null;
-
                         switch (type) {
                             case "Vegetable":
                                 pType = PlantType.VEGETABLE;
@@ -126,7 +138,59 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
                                 break;
 
                         }
-                        Plant p = new Plant(name, pType, image);
+
+                        PlotSize pPlotSize = null;
+                        switch (plotSize) {
+                            case 0:
+                                pPlotSize = PlotSize.SMALL;
+                                break;
+                            case 1:
+                                pPlotSize = PlotSize.MEDIUM;
+                                break;
+                            case 2:
+                                pPlotSize = PlotSize.LARGE;
+                                break;
+                        }
+
+                        CareFrequency pCareFreq = null;
+                        switch (careFrequency) {
+                            case 0:
+                                pCareFreq = CareFrequency.OCCASIONALLY;
+                                break;
+                            case 1:
+                                pCareFreq = CareFrequency.MONTHLY;
+                                break;
+                            case 2:
+                                pCareFreq = CareFrequency.FORTNIGHTLY;
+                                break;
+                            case 3:
+                                pCareFreq = CareFrequency.WEEKLY;
+                                break;
+                            case 4:
+                                pCareFreq = CareFrequency.DAILY;
+                                break;
+                        }
+
+                        Expertise pExpertise = null;
+                        switch (expertise) {
+                            case 0:
+                                pExpertise = Expertise.BEGINNER;
+                                break;
+                            case 1:
+                                pExpertise = Expertise.EASY;
+                                break;
+                            case 2:
+                                pExpertise = Expertise.MEDIUM;
+                                break;
+                            case 3:
+                                pExpertise = Expertise.ADVANCED;
+                                break;
+                            case 4:
+                                pExpertise = Expertise.EXPERT;
+                                break;
+                        }
+
+                        Plant p = new Plant(name, pType, image, description, pPlotSize, pCareFreq, pExpertise, monthByMonth);
 
                         plantList.add(p);
                     } while(c.moveToNext());
@@ -151,7 +215,7 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
 //        listView = rootView.findViewById(R.id.list_view);
 //        listView.setAdapter(customLA);
 
-        CustomRecyclerAdapter customRecyclerAdapter = new CustomRecyclerAdapter(plantList);
+        customRecyclerAdapter = new CustomRecyclerAdapter(this, plantList);
 
         rootView = inflater.inflate(R.layout.fragment_encyclopedia, container, false);
 
@@ -221,6 +285,24 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
         mListener = null;
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Plant p = customRecyclerAdapter.getItem(position);
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("plant", p);
+
+        PlantFragment plantFragment = new PlantFragment();
+        plantFragment.setArguments(bundle);
+
+        getActivity().getSupportFragmentManager().popBackStack();
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.filter_drawer, plantFragment, PLANT_FRAGMENT).addToBackStack(null)
+                .commit();
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -257,6 +339,7 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
 
         return true;
     }
+
 
 
 }
