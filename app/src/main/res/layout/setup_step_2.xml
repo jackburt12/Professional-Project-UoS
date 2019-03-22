@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="25dp"
+    android:background="@color/colorPrimary">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8">
+
+        <EditText
+            android:focusable="false"
+            android:id="@+id/dateOfBirth"
+            android:inputType="none"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_edit_text"
+            android:hint="Selct Date of Birth"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/greyedOut"
+            app:layout_constraintBottom_toTopOf="@+id/enterHeight"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+
+            android:focusable="false"
+            android:id="@+id/enterHeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_edit_text"
+            android:hint="Select Height"
+            android:inputType="none"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/greyedOut"
+            app:layout_constraintBottom_toTopOf="@+id/enterWeight"
+            app:layout_constraintTop_toBottomOf="@+id/dateOfBirth" />
+
+        <EditText
+            android:focusable="false"
+            android:id="@+id/enterWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_edit_text"
+            android:hint="Select Weight"
+            android:inputType="none"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/greyedOut"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enterHeight" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1" />
+
+</LinearLayout>

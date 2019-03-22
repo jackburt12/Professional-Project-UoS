@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class SunCalculations {
-    
+
     double longitude = -0.57280;
     double latitude = 51.25132;
 

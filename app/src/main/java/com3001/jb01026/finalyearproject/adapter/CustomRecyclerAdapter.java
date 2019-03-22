@@ -60,9 +60,8 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
                     filteredArray = plantList;
                 } else {
                     for (Plant p : plantList) {
-                        if (p.getName().toString().toLowerCase().contains(query.toLowerCase())) {
+                        if (p.getName().toLowerCase().contains(query.toLowerCase())) {
                             filteredArray.add(p);
-                            Log.d("Filtered Query:", p.getName());
                         }
                     }
                 }
