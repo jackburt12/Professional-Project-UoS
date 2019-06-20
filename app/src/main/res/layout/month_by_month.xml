@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="HardcodedText"
+    android:id="@+id/months">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/jan"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/feb"
+        app:layout_constraintStart_toStartOf="parent">
+        <TextView
+            android:textAlignment="center"
+            android:text="J"
+            android:textColor="@color/greyedOut"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/blank_circle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/feb"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/mar"
+        app:layout_constraintStart_toEndOf="@id/jan">
+        <TextView
+            android:textAlignment="center"
+            android:text="F"
+            android:textColor="@color/greyedOut"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/blank_circle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/mar"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/apr"
+        app:layout_constraintStart_toEndOf="@id/feb">
+        <TextView
+            android:textAlignment="center"
+            android:text="M"
+            android:textColor="@color/greyedOut"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/blank_circle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/apr"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/may"
+        app:layout_constraintStart_toEndOf="@id/mar">
+        <TextView
+            android:textAlignment="center"
+            android:text="A"
+            android:textColor="@color/greyedOut"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/blank_circle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/may"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/jun"
+        app:layout_constraintStart_toEndOf="@id/apr">
+        <TextView
+            android:textAlignment="center"
+            android:text="M"
+            android:textColor="@color/greyedOut"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/blank_circle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/jun"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/jul"
+        app:layout_constraintStart_toEndOf="@id/may">
+        <TextView
+            android:textAlignment="center"
+            android:text="J"
+            android:textColor="@color/greyedOut"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/blank_circle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/jul"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/aug"
+        app:layout_constraintStart_toEndOf="@id/jun">
+        <TextView
+            android:textAlignment="center"
+            android:text="J"
+            android:textColor="@color/greyedOut"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/blank_circle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/aug"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/sep"
+        app:layout_constraintStart_toEndOf="@id/jul">
+        <TextView
+            android:textAlignment="center"
+            android:text="A"
+            android:textColor="@color/greyedOut"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/blank_circle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/sep"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/oct"
+        app:layout_constraintStart_toEndOf="@id/aug">
+        <TextView
+            android:textAlignment="center"
+            android:text="S"
+            android:textColor="@color/greyedOut"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/blank_circle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/oct"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/nov"
+        app:layout_constraintStart_toEndOf="@id/sep">
+        <TextView
+            android:textAlignment="center"
+            android:text="O"
+            android:textColor="@color/greyedOut"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/blank_circle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/nov"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/dec"
+        app:layout_constraintStart_toEndOf="@id/oct">
+        <TextView
+            android:textAlignment="center"
+            android:text="N"
+            android:textColor="@color/greyedOut"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/blank_circle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/dec"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/nov">
+        <TextView
+            android:textAlignment="center"
+            android:text="D"
+            android:textColor="@color/greyedOut"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/blank_circle"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

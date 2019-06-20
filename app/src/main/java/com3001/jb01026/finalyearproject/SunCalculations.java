@@ -12,7 +12,6 @@ public class SunCalculations {
     double longitude = -0.57280;
     double latitude = 51.25132;
 
-
     public double calc_d () {
 
         Date today = new Date();

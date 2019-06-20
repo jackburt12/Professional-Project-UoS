@@ -141,51 +141,51 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
 
                         PlotSize pPlotSize = null;
                         switch (plotSize) {
-                            case 0:
+                            case 1:
                                 pPlotSize = PlotSize.SMALL;
                                 break;
-                            case 1:
+                            case 2:
                                 pPlotSize = PlotSize.MEDIUM;
                                 break;
-                            case 2:
+                            case 3:
                                 pPlotSize = PlotSize.LARGE;
                                 break;
                         }
 
                         CareFrequency pCareFreq = null;
                         switch (careFrequency) {
-                            case 0:
+                            case 1:
                                 pCareFreq = CareFrequency.OCCASIONALLY;
                                 break;
-                            case 1:
+                            case 2:
                                 pCareFreq = CareFrequency.MONTHLY;
                                 break;
-                            case 2:
+                            case 3:
                                 pCareFreq = CareFrequency.FORTNIGHTLY;
                                 break;
-                            case 3:
+                            case 4:
                                 pCareFreq = CareFrequency.WEEKLY;
                                 break;
-                            case 4:
+                            case 5:
                                 pCareFreq = CareFrequency.DAILY;
                                 break;
                         }
 
                         Expertise pExpertise = null;
                         switch (expertise) {
-                            case 0:
+                            case 1:
                                 pExpertise = Expertise.BEGINNER;
                                 break;
-                            case 1:
+                            case 2:
                                 pExpertise = Expertise.EASY;
                                 break;
-                            case 2:
+                            case 3:
                                 pExpertise = Expertise.MEDIUM;
                                 break;
-                            case 3:
+                            case 4:
                                 pExpertise = Expertise.ADVANCED;
                                 break;
-                            case 4:
+                            case 5:
                                 pExpertise = Expertise.EXPERT;
                                 break;
                         }

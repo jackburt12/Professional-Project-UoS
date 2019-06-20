@@ -2,6 +2,8 @@
 <resources>
     <color name="colorPrimary">#68A098</color>
     <color name="colorPrimaryDark">#036153</color>
+    <color name="colorSecondary">#AAED60</color>
+    <color name="colorSecondaryDark">#73A041</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorBackgroundGrey">#FAFAFA</color>
     <color name="greyedOut">#737474</color>
