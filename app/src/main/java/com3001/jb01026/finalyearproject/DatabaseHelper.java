@@ -3,6 +3,8 @@ package com3001.jb01026.finalyearproject;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -12,6 +14,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+import com3001.jb01026.finalyearproject.model.CareFrequency;
+import com3001.jb01026.finalyearproject.model.Expertise;
+import com3001.jb01026.finalyearproject.model.Plant;
+import com3001.jb01026.finalyearproject.model.PlantType;
+import com3001.jb01026.finalyearproject.model.PlotSize;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Plant.db";
@@ -98,6 +107,111 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.setTransactionSuccessful();
         db.endTransaction();
+
+    }
+
+    public ArrayList<Plant> getPlantList(SQLiteDatabase db) {
+
+        ArrayList<Plant> plantList = new ArrayList<Plant>();
+
+        try {
+
+            Cursor c = db.rawQuery("SELECT * FROM Plants", null);
+
+            if(c!=null) {
+                if(c.moveToFirst()) {
+                    do {
+                        String name = c.getString(c.getColumnIndex("Name"));
+                        String type = c.getString(c.getColumnIndex("Type"));
+                        String image = c.getString(c.getColumnIndex("Image"));
+                        String description = c.getString(c.getColumnIndex("Description"));
+                        int plotSize = c.getInt(c.getColumnIndex("PlotSize"));
+                        int careFrequency = c.getInt(c.getColumnIndex("CareFreq"));
+                        int expertise = c.getInt(c.getColumnIndex("Expertise"));
+                        String monthByMonth = c.getString(c.getColumnIndex("MonthByMonth"));
+
+
+                        PlantType pType = null;
+                        switch (type) {
+                            case "Vegetable":
+                                pType = PlantType.VEGETABLE;
+                                break;
+                            case "Fruit":
+                                pType = PlantType.FRUIT;
+                                break;
+                            case "Herb":
+                                pType = PlantType.HERB;
+                                break;
+
+                        }
+
+                        PlotSize pPlotSize = null;
+                        switch (plotSize) {
+                            case 1:
+                                pPlotSize = PlotSize.SMALL;
+                                break;
+                            case 2:
+                                pPlotSize = PlotSize.MEDIUM;
+                                break;
+                            case 3:
+                                pPlotSize = PlotSize.LARGE;
+                                break;
+                        }
+
+                        CareFrequency pCareFreq = null;
+                        switch (careFrequency) {
+                            case 1:
+                                pCareFreq = CareFrequency.OCCASIONALLY;
+                                break;
+                            case 2:
+                                pCareFreq = CareFrequency.MONTHLY;
+                                break;
+                            case 3:
+                                pCareFreq = CareFrequency.FORTNIGHTLY;
+                                break;
+                            case 4:
+                                pCareFreq = CareFrequency.WEEKLY;
+                                break;
+                            case 5:
+                                pCareFreq = CareFrequency.DAILY;
+                                break;
+                        }
+
+                        Expertise pExpertise = null;
+                        switch (expertise) {
+                            case 1:
+                                pExpertise = Expertise.BEGINNER;
+                                break;
+                            case 2:
+                                pExpertise = Expertise.EASY;
+                                break;
+                            case 3:
+                                pExpertise = Expertise.MEDIUM;
+                                break;
+                            case 4:
+                                pExpertise = Expertise.ADVANCED;
+                                break;
+                            case 5:
+                                pExpertise = Expertise.EXPERT;
+                                break;
+                        }
+
+                        Plant p = new Plant(name, pType, image, description, pPlotSize, pCareFreq, pExpertise, monthByMonth);
+
+                        plantList.add(p);
+                    } while(c.moveToNext());
+                }
+            }
+
+        } catch (SQLException se) {
+
+        } finally {
+            if(db!=null) {
+                db.execSQL("DELETE FROM Plants");
+                db.close();
+            }
+            return plantList;
+        }
 
     }
 

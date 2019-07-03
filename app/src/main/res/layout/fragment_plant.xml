@@ -150,6 +150,4 @@
         android:padding="10dp"
         layout="@layout/month_by_month"/>
 
-    <But
-
 </LinearLayout>

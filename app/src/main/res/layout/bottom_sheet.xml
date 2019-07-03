@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="1"
+    android:padding="35dp"
+    android:clickable="true"
+    android:background="@drawable/bottom_sheet_shadow"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    app:behavior_peekHeight="85dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.2"
+            android:layout_height="wrap_content">
+
+            <ToggleButton
+                android:id="@+id/toggle_button"
+                android:background="@drawable/ic_chervon_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOn=""
+                android:textOff=""
+                android:minWidth="40dp"
+                android:minHeight="40dp"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="0.8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="@color/white"
+                android:id="@+id/walk_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You are 0% through your walk"
+                android:textSize="16dp"/>
+            <TextView
+                android:id="@+id/time_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 min - 0 km"
+                android:textSize="12dp"
+                android:textColor="#BBB"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Points of interest remaining:"
+        android:textColor="@color/white"/>
+
+    <ListView
+        android:id="@+id/points_of_interest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+        <Button
+            android:gravity="center"
+            android:textSize="20dp"
+            android:backgroundTint="#9ED57E"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.45"
+            android:textColor="@color/white"
+            android:text="FAVOURITE"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="0.1"/>
+        <Button
+            android:gravity="center"
+            android:textSize="20dp"
+            android:backgroundTint="#F68A7E"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.45"
+            android:textColor="@color/white"
+            android:text="END WALK"/>
+    </LinearLayout>
+
+</LinearLayout>

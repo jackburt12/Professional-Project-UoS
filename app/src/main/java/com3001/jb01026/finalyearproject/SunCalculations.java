@@ -9,8 +9,8 @@ import java.util.TimeZone;
 
 public class SunCalculations {
 
-    double longitude = -0.57280;
-    double latitude = 51.25132;
+    double longitude;
+    double latitude;
 
     public double calc_d () {
 
@@ -123,6 +123,12 @@ public class SunCalculations {
         double zhor = x * Math.cos(convDegrees(latitude)) + z * Math.sin(convDegrees(latitude));
 
         return Math.asin(zhor)*180/Math.PI;
+
+    }
+
+    public double calc_shadow_length(double objectHeight) {
+
+        return objectHeight/calc_altitude();
 
 
     }
