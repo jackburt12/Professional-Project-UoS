@@ -42,6 +42,10 @@ dependencies {
     implementation 'com.github.turing-tech:MaterialScrollBar:13.3.2'
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.appyvet:materialrangebar:1.4.6'
+    implementation 'com.mafstech.libs:mafs-image-shape:1.0.4'
+    implementation 'com.wang.avi:library:2.1.3'
+
 
 
 }

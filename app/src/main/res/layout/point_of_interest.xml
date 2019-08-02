@@ -44,11 +44,11 @@
             android:textColor="@color/white"
             android:gravity="center_vertical"/>
         <TextView
-            android:id="@+id/visited"
+            android:id="@+id/point_distance_time"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Never visited!"
+            android:text="0 min - 0km"
             android:textColor="#bbb"
             android:gravity="center_vertical"/>
 

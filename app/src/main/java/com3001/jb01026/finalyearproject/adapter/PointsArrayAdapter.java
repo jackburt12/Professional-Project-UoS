@@ -7,27 +7,27 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com3001.jb01026.finalyearproject.R;
 import com3001.jb01026.finalyearproject.model.Plot;
+import com3001.jb01026.finalyearproject.model.RouteData;
 
 public class PointsArrayAdapter extends ArrayAdapter<Plot> {
 
     private Context mContext;
-    private ArrayList<Plot> plotList = new ArrayList<>();
+    private ArrayList<Plot> plotList;
+    private RouteData[] routeData;
 
     private int limit = 7;
-    private boolean cutOff = false;
 
-    public PointsArrayAdapter(@NonNull Context context, ArrayList<Plot> plots) {
+    public PointsArrayAdapter(@NonNull Context context, ArrayList<Plot> plots, RouteData[] data) {
         super(context,0, plots);
         mContext = context;
         plotList = plots;
-
+        routeData = data;
     }
 
     @NonNull
@@ -49,18 +49,24 @@ public class PointsArrayAdapter extends ArrayAdapter<Plot> {
         TextView name = point.findViewById(R.id.point_name);
         name.setText(plot.getPlant().getName());
 
-        //return super.getView(position, convertView, parent);
-//        if(!cutOff) {
-//            if(position > limit) {
-//                TextView tv = new TextView(mContext);
-//                String temp = new String("And " + (plotList.size()-limit) + " more...");
-//                tv.setText(temp);
-//                cutOff = false;
-//                return null;
-//            }
-//        } else {
-//            return null;
-//        }
+        TextView distanceTime = point.findViewById(R.id.point_distance_time);
+
+        int distance = 0;
+        int time = 0;
+
+        for(int i = 0; i<=position; ++i) {
+            distance += routeData[i].getDistance();
+            time += routeData[i].getTime();
+        }
+
+        String formattedTime = Integer.toString(time/60) + " min";
+        DecimalFormat df = new DecimalFormat("0.00");
+        double distanceKM = (double) distance /1000;
+        String formattedDistance = df.format(distanceKM) + " km";
+
+        String dtString = formattedTime + " - " + formattedDistance;
+
+        distanceTime.setText(dtString);
 
         return point;
     }

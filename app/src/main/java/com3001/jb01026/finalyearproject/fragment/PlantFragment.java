@@ -19,10 +19,10 @@ import com3001.jb01026.finalyearproject.model.PlotSize;
 
 public class PlantFragment extends Fragment {
 
-    Plant plant;
+    private Plant plant;
 
-    ImageView plantImageIV;
-    TextView plantTitleTV, plantDescriptionTV, plotFieldTV, careFieldTV, expertiseFieldTV, plantMonth;
+    private ImageView plantImageIV;
+    private TextView plantTitleTV, plantDescriptionTV, plotFieldTV, careFieldTV, expertiseFieldTV, plantMonth;
 
 
     public PlantFragment() {
@@ -62,15 +62,6 @@ public class PlantFragment extends Fragment {
 
         View v =  view.findViewById(R.id.months);
 
-      //  ((ViewGroup)v).getChildAt(1).setBackgroundResource(R.drawable.both_circle);
-
-
-//        for(int index=0; index<((ViewGroup)v).getChildCount(); ++index) {
-//            View nextChild = ((ViewGroup)v).getChildAt(index);
-//        }
-
-
-
         String[] monSplit = plant.getMonthByMonth().split("/");
         char[] plantMonthsChar = monSplit[0].toCharArray();
         char[] harvestMonthsChar = monSplit[1].toCharArray();
@@ -109,11 +100,6 @@ public class PlantFragment extends Fragment {
                 circleToChange.setBackgroundResource(R.drawable.harvest_circle);
             }
         }
-
-
-
-
-
 
         return view;
     }

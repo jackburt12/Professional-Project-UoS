@@ -1,9 +1,6 @@
 package com3001.jb01026.finalyearproject.fragment;
 
-import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,36 +8,40 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.SearchView;
-import android.widget.Toast;
 
-import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
 import com.turingtechnologies.materialscrollbar.AlphabetIndicator;
 import com.turingtechnologies.materialscrollbar.DragScrollBar;
-import com.turingtechnologies.materialscrollbar.TouchScrollBar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com3001.jb01026.finalyearproject.DatabaseHelper;
 import com3001.jb01026.finalyearproject.R;
-import com3001.jb01026.finalyearproject.adapter.CustomRecyclerAdapter;
-import com3001.jb01026.finalyearproject.model.CareFrequency;
-import com3001.jb01026.finalyearproject.model.Expertise;
+import com3001.jb01026.finalyearproject.activity.MainActivity;
+import com3001.jb01026.finalyearproject.adapter.CreateWalkPointsAdapter;
+import com3001.jb01026.finalyearproject.adapter.EncyclopediaRecyclerAdapter;
+import com3001.jb01026.finalyearproject.adapter.FilterListAdapter;
+import com3001.jb01026.finalyearproject.adapter.PointsArrayAdapter;
 import com3001.jb01026.finalyearproject.model.Plant;
 import com3001.jb01026.finalyearproject.model.PlantType;
-import com3001.jb01026.finalyearproject.model.PlotSize;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,7 +52,7 @@ import com3001.jb01026.finalyearproject.model.PlotSize;
  * create an instance of this fragment.
  */
 public class EncyclopediaFragment extends Fragment implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener  {
-    private final static String PLANT_FRAGMENT = "PLANT_FRAGMENT";
+    private final static String PLANT_FRAGMENT = "plant";
 
     ArrayList<Plant> plantList = new ArrayList<Plant>();
     private DatabaseHelper dbHelper;
@@ -62,13 +63,22 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
     ImageView filterButton;
     DrawerLayout filterDrawer;
 
-    CustomRecyclerAdapter customRecyclerAdapter;
+    EncyclopediaRecyclerAdapter encyclopediaRecyclerAdapter;
+    FilterListAdapter filterListAdapter;
 
     View rootView;
 
     Context context;
+    MainActivity mainActivity;
+
+    ExpandableListView expandableListView;
+
+    String checkBoxFilterQuery;
+    String searchQuery;
+
 
     private OnFragmentInteractionListener mListener;
+    private View filterHeader;
 
     public EncyclopediaFragment() {
         // Required empty public constructor
@@ -106,9 +116,11 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-            db = dbHelper.getWritableDatabase();
+        mainActivity = (MainActivity) getActivity();
 
-            plantList = dbHelper.getPlantList(db);
+        db = dbHelper.getWritableDatabase();
+        plantList = dbHelper.getPlantList(db);
+
 
 
 //        CustomListAdapter customLA = new CustomListAdapter((Activity) getContext(), plantList);
@@ -118,52 +130,163 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
 //        listView = rootView.findViewById(R.id.list_view);
 //        listView.setAdapter(customLA);
 
-        customRecyclerAdapter = new CustomRecyclerAdapter(this, plantList);
+        encyclopediaRecyclerAdapter = new EncyclopediaRecyclerAdapter(this, plantList);
 
-        rootView = inflater.inflate(R.layout.fragment_encyclopedia, container, false);
+        if(mainActivity.isCreatingWalk()) {
+            rootView = inflater.inflate(R.layout.fragment_encyclopedia_create, container, false);
+
+        } else {
+            rootView = inflater.inflate(R.layout.fragment_encyclopedia, container, false);
+
+        }
 
         searchView = rootView.findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                customRecyclerAdapter.getFilter().filter(query);
+                searchQuery = query;
+                UpdateFilter(searchQuery + "|" + checkBoxFilterQuery);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                customRecyclerAdapter.getFilter().filter(newText);
+                searchQuery = newText;
+                UpdateFilter(searchQuery + "|" + checkBoxFilterQuery);
                 return false;
             }
         });
 
-        ((DragScrollBar)rootView.findViewById(R.id.dragScrollBar)).setIndicator(new AlphabetIndicator(context), true);
+        DragScrollBar scrollBar = rootView.findViewById(R.id.dragScrollBar);
+        scrollBar.setIndicator(new AlphabetIndicator(context), true);
 
         recyclerView = rootView.findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(customRecyclerAdapter);
+        recyclerView.setAdapter(encyclopediaRecyclerAdapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         filterDrawer = rootView.findViewById(R.id.filter_drawer);
+        filterDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.END);
+
         filterButton = rootView.findViewById(R.id.filter_icon);
+
         filterButton.setOnClickListener(new View.OnClickListener() {
 
-        boolean drawerOpen = false;
+            boolean drawerOpen = false;
 
-        @Override
-        public void onClick(View v) {
-            filterButton = rootView.findViewById(R.id.filter_icon);
-            //filterDrawer.openDrawer(GravityCompat.END);
-            if(!drawerOpen) {
+            @Override
+            public void onClick(View v) {
                 filterDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN, GravityCompat.END);
-            }else {
-                filterDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.END);
             }
-        }
 
         });
 
+        filterHeader = rootView.findViewById(R.id.nav_view_header);
+
+        filterHeader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filterDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.END);
+            }
+        });
+
+        //TODO: Make drawer close if click outside drawer
+
+        expandableListView = rootView.findViewById(R.id.filter_listview);
+
+        HashMap<String, List<String>> item = new HashMap<>();
+
+        ArrayList<String> category = new ArrayList<>();
+        category.add("Fruit");
+        category.add("Veg");
+        category.add("Herb");
+        item.put("Category", category);
+
+        ArrayList<String> plotSize = new ArrayList<>();
+        plotSize.add("Small");
+        plotSize.add("Medium");
+        plotSize.add("Large");
+        item.put("Plot Size", plotSize);
+
+        ArrayList<String> careFreq = new ArrayList<>();
+        careFreq.add("Occasionally");
+        careFreq.add("Monthly");
+        careFreq.add("Fortnightly");
+        careFreq.add("Weekly");
+        careFreq.add("Daily");
+        item.put("Frequency of Care", careFreq);
+
+        ArrayList<String> expertise = new ArrayList<>();
+        expertise.add("Beginner");
+        expertise.add("Easy");
+        expertise.add("Medium");
+        expertise.add("Hard");
+        expertise.add("Expert");
+        item.put("Level of Expertise", expertise);
+
+
+        filterListAdapter = new FilterListAdapter(item);
+        expandableListView.setAdapter(filterListAdapter);
+
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                filterListAdapter.toggleChecked(groupPosition, childPosition);
+                return true;
+            }
+        });
+
+        if(mainActivity.isCreatingWalk()) {
+            Button confirm = rootView.findViewById(R.id.choose_points_confirm);
+
+            List<Plant> pointsChosen = new ArrayList<>();
+            confirm.setOnClickListener(v -> {
+                for(int i = 0; i<encyclopediaRecyclerAdapter.getItemCount(); i++) {
+                    if(encyclopediaRecyclerAdapter.getItem(i).getType()!=PlantType.DIVIDER) {
+                        if(encyclopediaRecyclerAdapter.getItem(i).isChecked()) {
+                            pointsChosen.add(encyclopediaRecyclerAdapter.getItem(i));
+                            Log.v("ITEMS CHOSEN", encyclopediaRecyclerAdapter.getItem(i).getName());
+                        }
+                    }
+                }
+                Log.v("FRAGS", getActivity().getSupportFragmentManager().getBackStackEntryAt(0).toString());
+                CreateWalkFragment createWalkFragment = (CreateWalkFragment) getActivity().getSupportFragmentManager().findFragmentByTag("walks");
+                createWalkFragment.UpdateList(pointsChosen);
+                getActivity().getSupportFragmentManager().popBackStack();
+
+
+
+            });
+
+        }
+
+        getCheckboxFilters();
+
+        Button applyFilters = rootView.findViewById(R.id.apply_filter_button);
+
+        applyFilters.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getCheckboxFilters();
+                UpdateFilter(searchQuery + "|" + checkBoxFilterQuery);
+
+            }
+        });
+
         return rootView;
+    }
+
+    public void getCheckboxFilters() {
+        List<boolean[]> checkedArray = filterListAdapter.checkedArray;
+        String s = "";
+        for(boolean[] bool: checkedArray) {
+            s = s + Arrays.toString(bool);
+        }
+        checkBoxFilterQuery = s;
+    }
+
+    public void UpdateFilter(String query) {
+        encyclopediaRecyclerAdapter.getFilter().filter(query);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -190,20 +313,25 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Plant p = customRecyclerAdapter.getItem(position);
+        Plant p = encyclopediaRecyclerAdapter.getItem(position);
+        if(p.getType()!=PlantType.DIVIDER) {
+            if(mainActivity.isCreatingWalk()==false) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("plant", p);
 
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("plant", p);
+                PlantFragment plantFragment = new PlantFragment();
+                plantFragment.setArguments(bundle);
 
-        PlantFragment plantFragment = new PlantFragment();
-        plantFragment.setArguments(bundle);
+                //getActivity().getSupportFragmentManager().popBackStack();
 
-        getActivity().getSupportFragmentManager().popBackStack();
-
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.filter_drawer, plantFragment, PLANT_FRAGMENT).addToBackStack(null)
-                .commit();
-
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.filter_drawer, plantFragment, PLANT_FRAGMENT).addToBackStack(null)
+                        .commit();
+            } else {
+//                RadioButton radio = view.findViewById(R.id.radio_button);
+//                radio.setChecked(!radio.isChecked());
+            }
+        }
     }
 
     /**

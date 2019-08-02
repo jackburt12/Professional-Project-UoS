@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="1"
+    android:padding="5dp">
+
+    <TextView
+        android:textSize="18dp"
+        android:layout_gravity="center_vertical"
+        android:text="This is temporary"
+        android:id="@+id/point_create_text"
+        android:layout_width="0dp"
+        android:layout_weight="0.9"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+
+        android:tint="@color/greyedOut"
+        android:src="@drawable/ic_delete"
+        android:id="@+id/trash"
+        android:layout_width="0dp"
+        android:layout_weight="0.1"
+        android:layout_height="30dp" />
+
+
+</LinearLayout>

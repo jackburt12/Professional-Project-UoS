@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_gravity="center_vertical"
+    android:layout_width="20dp"
+    android:layout_height="20dp"
+    android:elevation="12dp"
+    android:id="@+id/point_of_interest"
+    app:cardCornerRadius="10dp"
+    android:layout_centerHorizontal="true"
+    android:innerRadius="0dp"
+    android:shape="ring"
+    android:thicknessRatio="1.9"
+    android:layout_marginRight="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:id="@+id/point_of_interest_icon"
+        android:src="@drawable/img_apple"
+        android:scaleType="centerCrop"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true">
+    </ImageView>
+</androidx.cardview.widget.CardView>
+

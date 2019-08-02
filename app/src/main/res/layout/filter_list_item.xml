@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="?android:listPreferredItemPaddingLeft"
+    android:paddingLeft="45dp"
+    android:paddingStart="45dp"
+    android:weightSum="1"
+    android:clickable="false">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="0.8"
+        android:layout_height="wrap_content"
+        android:text="Item"
+        android:id="@+id/filter_item_text"
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimary"/>
+
+    <CheckBox
+        android:focusable="false"
+        android:clickable="false"
+        android:gravity="center_vertical"
+        android:id="@+id/filter_item_checkbox"
+        android:layout_width="0dp"
+        android:layout_weight="0.2"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

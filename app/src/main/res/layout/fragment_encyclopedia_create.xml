@@ -9,64 +9,86 @@
     android:id="@+id/filter_drawer">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.9">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:layout_marginTop="10dp">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_search"
+                    android:tint="@color/greyedOut"/>
+                <SearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="0dp"
+                    android:layout_weight="10"
+                    android:layout_height="wrap_content"
+                    android:iconifiedByDefault="false"
+                    android:searchIcon="@null"
+                    android:queryHint="Search Encyclopedia" />
+
+                <ImageView
+                    android:id="@+id/filter_icon"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_filter"
+                    android:tint="@color/greyedOut"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/recycler_view"
+                    android:layout_marginHorizontal="40dp">
+                </androidx.recyclerview.widget.RecyclerView>
+                <com.turingtechnologies.materialscrollbar.DragScrollBar
+                    android:id="@+id/dragScrollBar"
+                    android:layout_width="wrap_content"
+                    app:msb_recyclerView="@id/recycler_view"
+                    app:msb_lightOnTouch="false"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    app:msb_handleColor="@color/colorPrimary"/>
+
+            </RelativeLayout>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="20dp"
-            android:layout_marginTop="10dp">
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_search"
-                android:tint="@color/greyedOut"/>
-            <SearchView
-                android:id="@+id/search_view"
-                android:layout_width="0dp"
-                android:layout_weight="10"
-                android:layout_height="wrap_content"
-                android:iconifiedByDefault="false"
-                android:searchIcon="@null"
-                android:queryHint="Search Encyclopedia" />
-
-            <ImageView
-                android:id="@+id/filter_icon"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_filter"
-                android:tint="@color/greyedOut"/>
-
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/choose_points_confirm"
+                android:text="Confirm Choices"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/recycler_view"
-                android:layout_marginHorizontal="40dp">
-            </androidx.recyclerview.widget.RecyclerView>
-            <com.turingtechnologies.materialscrollbar.DragScrollBar
-                android:id="@+id/dragScrollBar"
-                android:layout_width="wrap_content"
-                app:msb_recyclerView="@id/recycler_view"
-                app:msb_lightOnTouch="false"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                app:msb_handleColor="@color/colorPrimary"/>
-
-        </RelativeLayout>
     </LinearLayout>
-
-
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

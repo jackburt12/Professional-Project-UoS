@@ -7,14 +7,13 @@ public class Plant implements Serializable {
     private String name;
     private PlantType type;
     private String image;
-
     private String description;
-
     private PlotSize plotSize;
     private CareFrequency careFrequency;
     private Expertise expertise;
-
     private String monthByMonth;
+
+    private boolean isChecked;
 
     public Plant(String name, PlantType type, String imageID, String description, PlotSize plotSize, CareFrequency careFrequency, Expertise expertise, String monthByMonth) {
         this.name = name;
@@ -70,4 +69,11 @@ public class Plant implements Serializable {
         else return true;
     }
 
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 }
