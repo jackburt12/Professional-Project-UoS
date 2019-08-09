@@ -90,10 +90,6 @@ public class WalkFragment extends Fragment implements LocationListener {
 
     Context context;
 
-
-
-    private Polyline route;
-
     private BottomSheetBehavior bottomSheetBehavior;
 
     private ToggleButton toggleButton;
@@ -351,8 +347,6 @@ public class WalkFragment extends Fragment implements LocationListener {
             double minimum = walk.getMinDistance()*1000;
             double maximum = walk.getMaxDistance()*1000;
 
-            Log.v("ASYNC", "RESPONSE RECEIVED");
-
             int totalTime = 0;
             int totalDistance = 0;
 
@@ -383,8 +377,7 @@ public class WalkFragment extends Fragment implements LocationListener {
                 }
 
             }
-            Log.v("BEST DISTANCE", Integer.toString(bestJourneyDistance));
-            Log.v("NEW DISTANCE", Integer.toString(totalDistance));
+
 
             tasksFinished++;
 
@@ -392,7 +385,9 @@ public class WalkFragment extends Fragment implements LocationListener {
             if(tasksFinished == taskCount) {
                 if(bestRoute == null) {
                     Toast.makeText(getContext(),"No route that satisfies requirements! Please modify points or distance restrictions.",Toast.LENGTH_SHORT).show();
-                    getActivity().getSupportFragmentManager().popBackStack();
+                    Fragment fragment = getActivity().getSupportFragmentManager().findFragmentByTag("walking");
+                    if(fragment != null)
+                        getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
 
                 } else {
                     PopulatePointsList(googleMap, bestRoute);
@@ -417,12 +412,8 @@ public class WalkFragment extends Fragment implements LocationListener {
                     taskCount++;
                 }
             }
-            Log.v("TEMP", temp.toString());
             indexes.add(temp);
         }
-
-
-        Log.v("INDEXES", indexes.toString());
 
         directionsHelper = new DirectionsHelper(asyncResponse);
 
@@ -442,7 +433,6 @@ public class WalkFragment extends Fragment implements LocationListener {
                         tempRoute.add( plots.get(indexes.get(temp).get(i1)));
                         temp++;
                     }
-                    Log.v("CREATING ROUTE", "UH OH");
 
                     Route r = new Route(entrance, tempRoute);
 
@@ -582,7 +572,7 @@ public class WalkFragment extends Fragment implements LocationListener {
 
         int widthMask = mask.getWidth();
         int heightMask = mask.getHeight()+50;
-        Log.v("Height mask", Integer.toString(heightMask));
+
         float centerX = (widthMask - original.getWidth()) * 0.5f;
         float centerY = (heightMask - original.getHeight()) * 0.5f;
 

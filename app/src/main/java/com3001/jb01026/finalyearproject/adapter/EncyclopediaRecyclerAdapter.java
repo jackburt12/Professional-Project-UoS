@@ -67,13 +67,10 @@ public class EncyclopediaRecyclerAdapter extends RecyclerView.Adapter<Encycloped
 
                 ArrayList<Plant> filteredArray = new ArrayList<Plant>();
 
-                Log.v("TEXT QUERY", textQuery);
-
                 //string querying below
                 if(textQuery.isEmpty()||textQuery.equals("null") || textQuery=="") {
                     filteredArray = plantList;
                 } else {
-                    //Log.v("text query", textQuery);
                     for (Plant p : plantList) {
                         if (p.getName().toLowerCase().contains(textQuery.toLowerCase())) {
                             filteredArray.add(p);
@@ -83,7 +80,6 @@ public class EncyclopediaRecyclerAdapter extends RecyclerView.Adapter<Encycloped
 
                 //checkbox filtering below
                 String checkboxQuery = query.split("\\|")[1];
-                Log.v("checkboxFull", checkboxQuery);
                 String filterCategory[] = checkboxQuery.substring(1, checkboxQuery.length()-1).split("\\]\\[");
                 
                 ArrayList<Plant> finalArray = new ArrayList<Plant>();
@@ -92,23 +88,16 @@ public class EncyclopediaRecyclerAdapter extends RecyclerView.Adapter<Encycloped
                 List<List<Boolean>> categoryBools = new ArrayList<>();
                 List<Boolean> bools;
                 for(int i = 0; i < filterCategory.length; i++) {
-                    //Log.v("SINGLE CATEGORY LOG", singleCategory);
                     String[] temp = filterCategory[i].split("\\s*,\\s*");
                     bools = new ArrayList<>();
                     for(int j = 0; j < temp.length; j++) {
                         boolean bool = new Boolean(temp[j]);
-                        Log.v("TEMP " + Integer.toString(j), Boolean.toString(bool));
                         bools.add(bool);
 
 
                     }
-                    //Log.v("BOOLS", bools.toString());
                     categoryBools.add(bools);
                 }
-
-                //Log.v("FILTERED ARRAY SIZE", categoryBools.toString());
-                Log.v("categoryBools length", Integer.toString(categoryBools.size()));
-                Log.v("categoryBools first index", categoryBools.toString());
 
                 for(Plant p : filteredArray) {
                     boolean add = true;
@@ -205,9 +194,6 @@ public class EncyclopediaRecyclerAdapter extends RecyclerView.Adapter<Encycloped
                     }
 
                 }
-
-                Log.v("test", "test");
-                Log.v("final array size", Integer.toString(finalArray.size()));
 
                 FilterResults results = new FilterResults();
                 results.count = finalArray.size();

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:padding="10dp"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="0.9"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginBottom="10dp"
+                android:textColor="#000"
+                android:text="Name"
+                android:textSize="18dp"
+                android:id="@+id/object_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:paddingRight="5dp"
+                    android:textSize="12dp"
+                    android:textColor="#000"
+                    android:text="Height:"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/object_height"
+                    android:paddingRight="15dp"
+                    android:textSize="12dp"
+                    android:textColor="@color/greyedOut"
+                    android:text="h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:paddingRight="5dp"
+                    android:text="Distance:"
+                    android:textSize="12dp"
+                    android:textColor="#000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingRight="15dp"
+                    android:id="@+id/object_distance"
+                    android:text="d"
+                    android:textSize="12dp"
+                    android:textColor="@color/greyedOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:paddingRight="5dp"
+                    android:text="Angle:"
+                    android:textSize="12dp"
+                    android:textColor="#000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingRight="15dp"
+                    android:id="@+id/object_angle"
+                    android:text="a"
+                    android:textSize="12dp"
+                    android:textColor="@color/greyedOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_gravity="center"
+            android:tint="@color/greyedOut"
+            android:src="@drawable/ic_delete"
+            android:id="@+id/trash"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
+</LinearLayout>

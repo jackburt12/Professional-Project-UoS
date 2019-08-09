@@ -42,9 +42,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
         this.context = context;
-        if(context == null) {
-            Log.d("TEST", "CONTEXT IS NULL");
-        }
 
         //TODO: This probably shouldn't be here...
         InputStream stream = context.getResources().openRawResource(R.raw.file);

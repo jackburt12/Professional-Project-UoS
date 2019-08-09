@@ -54,7 +54,6 @@ public class PlantFragment extends Fragment {
         careFieldTV = view.findViewById(R.id.care_field);
         expertiseFieldTV = view.findViewById(R.id.expertise_field);
 
-        Log.v("PLOTSIZE: ", plant.getName().toString());
 
         plotFieldTV.setText(plant.getPlotSize().toString());
         careFieldTV.setText(plant.getCareFrequency().toString());
@@ -65,10 +64,6 @@ public class PlantFragment extends Fragment {
         String[] monSplit = plant.getMonthByMonth().split("/");
         char[] plantMonthsChar = monSplit[0].toCharArray();
         char[] harvestMonthsChar = monSplit[1].toCharArray();
-
-        Log.v("plantMonthsChar", Arrays.toString(plantMonthsChar));
-        Log.v("harvestMonthsChar", Arrays.toString(harvestMonthsChar));
-
 
         int[] plantMonths = new int[]{0,0,0,0,0,0,0,0,0,0,0,0};
         int[] harvestMonths = new int[]{0,0,0,0,0,0,0,0,0,0,0,0};
@@ -82,9 +77,6 @@ public class PlantFragment extends Fragment {
         for(int i = 0; i< harvestMonthsChar.length; i++){
             harvestMonths[Integer.parseInt(Character.toString(harvestMonthsChar[i]), 16)-1] = 1;
         }
-
-        Log.v("plantMonths", Arrays.toString(plantMonths));
-        Log.v("harvestMonths", Arrays.toString(harvestMonths));
 
         for(int i = 0; i<12; i++) {
             View circleToChange = ((ViewGroup)((ViewGroup)monthByMonth).getChildAt(i)).getChildAt(1);

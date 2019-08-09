@@ -245,11 +245,9 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
                     if(encyclopediaRecyclerAdapter.getItem(i).getType()!=PlantType.DIVIDER) {
                         if(encyclopediaRecyclerAdapter.getItem(i).isChecked()) {
                             pointsChosen.add(encyclopediaRecyclerAdapter.getItem(i));
-                            Log.v("ITEMS CHOSEN", encyclopediaRecyclerAdapter.getItem(i).getName());
                         }
                     }
                 }
-                Log.v("FRAGS", getActivity().getSupportFragmentManager().getBackStackEntryAt(0).toString());
                 CreateWalkFragment createWalkFragment = (CreateWalkFragment) getActivity().getSupportFragmentManager().findFragmentByTag("walks");
                 createWalkFragment.UpdateList(pointsChosen);
                 getActivity().getSupportFragmentManager().popBackStack();

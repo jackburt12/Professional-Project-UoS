@@ -134,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     @Override
     public void onBackStackChanged() {
         boolean canGoBack = getSupportFragmentManager().getBackStackEntryCount()>0;
-        Log.v("BACK STACK" , "CHANGED");
         getSupportActionBar().setDisplayHomeAsUpEnabled(canGoBack);
     }
 
@@ -149,7 +148,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                     Fragment fragment = getSupportFragmentManager().findFragmentByTag("plant");
                     if(fragment != null)
                         getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-                    Log.v("NUMBER OF FRAGS ON BACKSTACK", Integer.toString(manager.getBackStackEntryCount()));
 
                 }
                 return true;
