@@ -312,6 +312,16 @@ public class SunCalculations {
         return totalHours;
     }
 
+    public double calc_max_sun_exposure_day (GardenPlot plot, Date date) {
+        double totalHours = 0;
+        for (double d = 0; d < 24; d += 0.25) {
+            double altitude = calc_altitude();
+            if(altitude > 0) {
+                totalHours+=0.25;
+            }
+        }
+        return totalHours;
+    }
 
     public double calc_sun_exposure_month(GardenPlot plot, int month) {
 
@@ -332,5 +342,58 @@ public class SunCalculations {
 
         return totalHours;
     }
+
+    public double calc_max_sun_exposure_month (GardenPlot plot, int month) {
+        double totalHours = 0;
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+
+        Date date;
+        for (int i = 1; i <= cal.getActualMaximum(Calendar.DATE); i++) {
+            cal.set(year, month-1, i);
+            System.out.println("Day in month: "+i);
+            date = cal.getTime();
+
+            totalHours += calc_max_sun_exposure_day(plot, date);
+
+        }
+
+        return totalHours;
+    }
+
+    public double calc_sun_exposure_year(GardenPlot plot) {
+        double totalHours = 0;
+
+        for (int i = 1; i <= 12; i++) {
+            totalHours+= calc_sun_exposure_month(plot, i);
+        }
+
+        return totalHours;
+    }
+
+    public double calc_max_sun_exposure_year(GardenPlot plot) {
+        double totalHours = 0;
+
+        for (int i = 1; i <= 12; i++) {
+            totalHours+= calc_max_sun_exposure_month(plot, i);
+        }
+
+        return totalHours;
+    }
+
+    public int calc_shade_rading(GardenPlot plot) {
+
+        double maxSun = calc_max_sun_exposure_year(plot);
+        double actualSun = calc_sun_exposure_year(plot);
+
+        double difference = maxSun - actualSun;
+
+        int rating = (int)Math.round(difference/maxSun*100);
+
+        return rating;
+    }
+
+
 
 }

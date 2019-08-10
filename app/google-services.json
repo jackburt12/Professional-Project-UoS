@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "745884918978",
+    "firebase_url": "https://rhs-experience.firebaseio.com",
+    "project_id": "rhs-experience",
+    "storage_bucket": "rhs-experience.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:745884918978:android:153863c30c1b47dc",
+        "android_client_info": {
+          "package_name": "com3001.jb01026.finalyearproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "745884918978-lei0g1kkp7hrm545kkmh9iqmdhsil38o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com3001.jb01026.finalyearproject",
+            "certificate_hash": "ec779b4a74a7ffb9d873b5cdb6574f5a2c788802"
+          }
+        },
+        {
+          "client_id": "745884918978-leiecpnqpti3b59fjn3ce4lla8lljse8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9p1r94xYyGZuIwYPxO_Puosvp0uxuRCI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "745884918978-leiecpnqpti3b59fjn3ce4lla8lljse8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

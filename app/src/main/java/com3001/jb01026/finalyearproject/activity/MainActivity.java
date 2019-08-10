@@ -5,12 +5,24 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.Objects;
 
@@ -30,13 +42,22 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     private ActionBar actionBar;
     private DatabaseHelper dbHelper;
 
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    private String userName;
+    private LatLng userLocation;
+
+    TextView hello;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dbHelper = new DatabaseHelper(getApplicationContext());
+        hello = findViewById(R.id.hello_message);
 
+        dbHelper = new DatabaseHelper(getApplicationContext());
         actionBar = getSupportActionBar();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -151,8 +172,52 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
                 }
                 return true;
+            case R.id.logout:
+                mAuth.signOut();
+                isLoggedIn();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isLoggedIn();
+
+    }
+
+    private void isLoggedIn() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser == null) {
+            //send to sign in
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivityForResult(intent, 0);
+        } else {
+            db.collection("users").document(currentUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        GeoPoint geoPoint = document.getGeoPoint("location");
+                        userLocation = new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude());
+                        userName = document.getString("name");
+
+                        hello.setText("Hello " + userName);
+                    } else {
+                        Log.w("FIREBASE ERROR", "Error getting documents.", task.getException());
+
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+        //return super.onCreateOptionsMenu(menu);
     }
 }

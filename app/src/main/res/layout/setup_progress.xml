@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimaryMid">
 
     <TextView
 
@@ -23,7 +23,7 @@
         app:spb_currentStateNumber="one"
         app:spb_maxStateNumber="three"
         app:spb_stateBackgroundColor="@color/colorPrimaryDark"
-        app:spb_stateForegroundColor="@color/colorAccent"
+        app:spb_stateForegroundColor="@color/colorSecondary"
         app:spb_stateNumberBackgroundColor="@color/colorPrimary"
         app:spb_stateNumberForegroundColor="#eeeeee"
         app:spb_currentStateDescriptionColor="#009688"

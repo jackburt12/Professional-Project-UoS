@@ -8,18 +8,18 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com3001.jb01026.finalyearproject.R;
+import com3001.jb01026.finalyearproject.activity.SetupWizard;
 
 public class SetupStep1 extends Fragment {
 
     EditText emailEnter, emailConfirm, passwordEnter, passwordConfirm, nameEnter;
-    GradientDrawable emailGrad, emailConfirmGrad, passwordGrad, passwordConfirmGrad, nameEnterGrad;
 
-    //TODO: Figure out way to disallow swipe to progress when any fields are invalid
     Boolean allEntriesValid = false;
 
 
@@ -30,140 +30,24 @@ public class SetupStep1 extends Fragment {
 
         View view = inflater.inflate(R.layout.setup_step_1, container, false);
 
-        emailEnter = (EditText)view.findViewById(R.id.emailEntry);
-        emailConfirm = (EditText)view.findViewById(R.id.emailConfirm);
-        passwordEnter = (EditText)view.findViewById(R.id.passwordEntry);
-        passwordConfirm = (EditText)view.findViewById(R.id.passwordConfirm);
-        nameEnter = (EditText)view.findViewById(R.id.nameEntry);
-        emailGrad = (GradientDrawable)emailEnter.getBackground();
-        emailConfirmGrad = (GradientDrawable)emailConfirm.getBackground();
-        passwordGrad = (GradientDrawable)passwordEnter.getBackground();
-        passwordConfirmGrad = (GradientDrawable)passwordConfirm.getBackground();
-        nameEnterGrad =(GradientDrawable)nameEnter.getBackground();
+        emailEnter = (EditText)view.findViewById(R.id.input_email);
+        emailConfirm = (EditText)view.findViewById(R.id.input_email_confirm);
+        passwordEnter = (EditText)view.findViewById(R.id.input_password);
+        passwordConfirm = (EditText)view.findViewById(R.id.input_password_confirm);
+        nameEnter = (EditText)view.findViewById(R.id.input_name);
 
-        nameEnter.addTextChangedListener(new TextWatcher() {
+        Button nextButton = view.findViewById(R.id.next_button);
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                if(charSequence.toString().equals("")) {
-                    nameEnterGrad.setStroke(0, Color.TRANSPARENT);
-                } else {
-                    nameEnterGrad.setStroke(5, getResources().getColor(R.color.colorAccent));
+            public void onClick(View v) {
+                if(validate()) {
+                    SetupWizard wizard = (SetupWizard)getActivity();
+                    wizard.setEmail(emailEnter.getText().toString());
+                    wizard.setName(nameEnter.getText().toString());
+                    wizard.setPassword(passwordEnter.getText().toString());
+                    wizard.nextPage();
                 }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        emailEnter.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.toString().equals("")) {
-                    emailGrad.setStroke(0, Color.TRANSPARENT);
-                } else if (android.util.Patterns.EMAIL_ADDRESS.matcher(charSequence).matches()) {
-                    emailGrad.setStroke(5, getResources().getColor(R.color.colorAccent));
-                } else {
-                    emailGrad.setStroke(5, Color.RED);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        emailConfirm.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                if(s.toString().equals("")) {
-                    emailConfirmGrad.setStroke(0, Color.TRANSPARENT);
-                } else if(s.toString()!="") {
-                    if(emailConfirm.getText().toString().equals(emailEnter.getText().toString())) {
-                        emailConfirmGrad.setStroke(5, getResources().getColor(R.color.colorAccent));
-
-                    } else {
-                        emailConfirmGrad.setStroke(5, Color.RED);
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        passwordEnter.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.toString().equals("")) {
-                    passwordGrad.setStroke(0, Color.TRANSPARENT);
-                } else if(passwordValidation(charSequence.toString())) {
-                    passwordGrad.setStroke(5, getResources().getColor(R.color.colorAccent));
-                } else {
-                    passwordGrad.setStroke(5, Color.RED);
-
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        passwordConfirm.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                if(s.toString().equals("")) {
-                    passwordConfirmGrad.setStroke(0, Color.TRANSPARENT);
-                } else if(s!="") {
-                    if(passwordConfirm.getText().toString().equals(passwordEnter.getText().toString())) {
-                        passwordConfirmGrad.setStroke(5, getResources().getColor(R.color.colorAccent));
-
-                    } else {
-                        passwordConfirmGrad.setStroke(5, Color.RED);
-                    }
-                }
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
             }
         });
 
@@ -172,11 +56,37 @@ public class SetupStep1 extends Fragment {
 
     }
 
-    boolean passwordValidation(String password) {
-        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
-        if(password.matches(pattern)) {
-            return true;
+    boolean validate() {
+        boolean valid = true;
+
+        if(nameEnter.getText().toString().isEmpty()) {
+            nameEnter.setError("Must enter a name");
+            valid = false;
         }
-        return false;
+
+        if (emailEnter.getText().toString().isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(emailEnter.getText().toString()).matches()) {
+            emailEnter.setError("Enter a valid email address");
+            valid = false;
+        }
+
+        if (emailConfirm.getText().toString().isEmpty() || !emailConfirm.getText().toString().equals(emailEnter.getText().toString())) {
+            emailConfirm.setError("Must match email address");
+            valid = false;
+        }
+
+        String passwordPattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{4,16}";
+        if(passwordEnter.getText().toString().isEmpty() || !passwordEnter.getText().toString().matches(passwordPattern)) {
+            passwordEnter.setError("Must be between 4 and 16 characters, and include at least one letter and one number");
+            valid = false;
+        }
+
+        if(passwordConfirm.getText().toString().isEmpty() || !passwordConfirm.getText().toString().equals(passwordEnter.getText().toString())) {
+            passwordConfirm.setError("Must match password");
+            valid = false;
+        }
+
+        return valid;
     }
+
+
 }

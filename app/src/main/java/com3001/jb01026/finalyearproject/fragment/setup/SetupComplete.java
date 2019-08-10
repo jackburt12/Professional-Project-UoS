@@ -8,14 +8,18 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com3001.jb01026.finalyearproject.R;
+import com3001.jb01026.finalyearproject.activity.SetupWizard;
 
 public class SetupComplete extends Fragment {
 
     CheckBox agreeBox;
-    Button finishButton;
+    Button finishButton, backButton;
+
 
     @Nullable
     @Override
@@ -35,6 +39,24 @@ public class SetupComplete extends Fragment {
                 }
             }
         });
+
+        backButton = view.findViewById(R.id.back_button);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SetupWizard)getActivity()).previousPage();
+            }
+        });
+
+        finishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SetupWizard)getActivity()).createAccount();
+            }
+        });
+
+
 
 
         return view;

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -41,8 +42,6 @@ public class GardenFragment extends Fragment {
     ListView plotList;
     PlotsListAdapter adapter;
 
-    public SunCalculations sunCalculations;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,39 +50,27 @@ public class GardenFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_garden, container, false);
 
         plotList = rootView.findViewById(R.id.plot_list);
-//        adapter = new PlotsListAdapter(getContext(), (ArrayList)plots, this);
-//        plotList.setAdapter(adapter);
 
+        plotList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                GardenPlot plot = adapter.getItem(position);
 
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("garden_plot", plot);
 
-        /*
-        sunCalculations = new SunCalculations();
+                GardenPlotFragment plotFragment = new GardenPlotFragment();
+                plotFragment.setArguments(bundle);
 
+                //getActivity().getSupportFragmentManager().popBackStack();
 
-        GardenPlot plot = new GardenPlot(6, 4);
-        ShadowObject obj1 = new ShadowObject(10, 220, 7);
-        ShadowObject obj2 = new ShadowObject(10,40,5);
-        ShadowObject obj3 = new ShadowObject(14,98,8);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.filter_drawer, plotFragment, "garden_plot_fragment").addToBackStack(null)
+                        .commit();
 
-        List<ShadowObject> tempList = new ArrayList<>();
-        tempList.add(obj1);
-        tempList.add(obj2);
-        tempList.add(obj3);
+            }
+        });
 
-        plot.setShadowObjects(tempList);
-
-        Date today = new Date();
-
-        double sunPerDay = sunCalculations.calc_sun_exposure_day(plot, today);
-        double sunPerMonth = sunCalculations.calc_sun_exposure_month(plot, 1);
-
-        System.out.println(sunPerDay);
-        System.out.println(sunPerMonth);
-
-        WeatherCalculations weatherCalculations = new WeatherCalculations();
-        weatherCalculations.calc_weather();
-
-*/
         FloatingActionButton fab = rootView.findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {

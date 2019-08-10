@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:padding="25dp"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimaryMid">
 
     <RelativeLayout
         android:layout_width="0dp"
@@ -17,48 +17,155 @@
         android:layout_height="match_parent"
         android:layout_weight="0.8">
 
-        <EditText
-            android:focusable="false"
-            android:id="@+id/dateOfBirth"
-            android:inputType="none"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/places_autocomplete_layout"
+            android:textColorHint="#BBB"
+            app:hintTextColor="#BBB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_edit_text"
-            android:hint="Selct Date of Birth"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/greyedOut"
-            app:layout_constraintBottom_toTopOf="@+id/enterHeight"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/input_city_layout"
+            app:layout_constraintTop_toTopOf="parent">
+            <com.seatgeek.placesautocomplete.PlacesAutocompleteTextView android:id="@+id/places_autocomplete"
+                app:pacv_googleMapsApiKey="AIzaSyC0ZgbFDEsvp56h5VUw8g1j2LldFv-2_F4"
+                android:textColor="@color/white"
+                android:textColorHint="@color/colorBackgroundGrey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textVisiblePassword"
+                android:hint="Start Typing Address" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-
-            android:focusable="false"
-            android:id="@+id/enterHeight"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:id="@+id/input_city_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_edit_text"
-            android:hint="Select Height"
-            android:inputType="none"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/greyedOut"
-            app:layout_constraintBottom_toTopOf="@+id/enterWeight"
-            app:layout_constraintTop_toBottomOf="@+id/dateOfBirth" />
+            app:layout_constraintBottom_toTopOf="@+id/county_postcode_layout"
+            app:layout_constraintTop_toBottomOf="@id/places_autocomplete_layout">
 
-        <EditText
-            android:focusable="false"
-            android:id="@+id/enterWeight"
+            <com.google.android.material.textfield.TextInputLayout
+                android:textColorHint="#BBB"
+                app:hintTextColor="#BBB"
+                android:layout_width="0dp"
+                android:layout_weight="0.45"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <EditText android:id="@+id/input_city"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/colorBackgroundGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="City" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:textColorHint="#BBB"
+                app:hintTextColor="#BBB"
+                android:layout_width="0dp"
+                android:layout_weight="0.45"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <EditText android:id="@+id/input_country"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/colorBackgroundGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="Country" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:weightSum="1"
+            android:id="@+id/county_postcode_layout"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_edit_text"
-            android:hint="Select Weight"
-            android:inputType="none"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/greyedOut"
+            app:layout_constraintBottom_toTopOf="@id/button_layout"
+            app:layout_constraintTop_toBottomOf="@+id/input_city_layout">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_county_layout"
+                android:textColorHint="#BBB"
+                app:hintTextColor="#BBB"
+                android:layout_width="0dp"
+                android:layout_weight="0.45"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <EditText android:id="@+id/input_county"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/colorBackgroundGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="County" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_post_code_layout"
+                android:textColorHint="#BBB"
+                app:hintTextColor="#BBB"
+                android:layout_width="0dp"
+                android:layout_weight="0.45"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+                <EditText android:id="@+id/input_post_code"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/colorBackgroundGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="Post Code" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enterHeight" />
+            app:layout_constraintTop_toBottomOf="@+id/county_postcode_layout">
+
+            <Button
+                android:layout_alignParentLeft="true"
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_transparent_border"
+                android:text="Back"
+                android:textColor="@color/white" />
+            <Button
+                android:layout_alignParentRight="true"
+                android:layout_gravity="left"
+                android:id="@+id/next_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_transparent_border"
+                android:text="Next"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -2,12 +2,11 @@
 <LinearLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:padding="25dp"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimaryMid">
 
     <RelativeLayout
         android:layout_width="0dp"
@@ -19,70 +18,119 @@
         android:layout_height="match_parent"
         android:layout_weight="0.8">
 
-        <EditText
-            android:background="@drawable/custom_edit_text"
-            android:padding="10dp"
-            android:textColorHint="@color/greyedOut"
-            android:textColor="@color/white"
-            android:hint="Enter Name"
-            android:id="@+id/nameEntry"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_name_layout"
+            android:textColorHint="#BBB"
+            app:hintTextColor="#BBB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            app:layout_constraintBottom_toTopOf="@+id/emailEntry"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/input_email_layout"
+            app:layout_constraintTop_toTopOf="parent">
+            <EditText android:id="@+id/input_name"
+                android:textColor="@color/white"
+                android:textColorHint="@color/colorBackgroundGrey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="Name" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:background="@drawable/custom_edit_text"
-            android:padding="10dp"
-            android:textColorHint="@color/greyedOut"
-            android:textColor="@color/white"
-            android:hint="Enter Email"
-            android:id="@+id/emailEntry"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_email_layout"
+            android:textColorHint="#BBB"
+            app:hintTextColor="#BBB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            app:layout_constraintBottom_toTopOf="@+id/emailConfirm"
-            app:layout_constraintTop_toBottomOf="@+id/nameEntry" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/input_email_confirm_layout"
+            app:layout_constraintTop_toBottomOf="@id/input_name_layout">
+            <EditText android:id="@+id/input_email"
+                android:textColor="@color/white"
+                android:textColorHint="@color/colorBackgroundGrey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Email" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:background="@drawable/custom_edit_text"
-            android:padding="10dp"
-            android:textColorHint="@color/greyedOut"
-            android:textColor="@color/white"
-            android:hint="Confirm Email"
-            android:id="@+id/emailConfirm"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_email_confirm_layout"
+            android:textColorHint="#BBB"
+            app:hintTextColor="#BBB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            app:layout_constraintBottom_toTopOf="@+id/passwordEntry"
-            app:layout_constraintTop_toBottomOf="@+id/emailEntry" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/input_password_layout"
+            app:layout_constraintTop_toBottomOf="@+id/input_email_layout">
+            <EditText android:id="@+id/input_email_confirm"
+                android:textColor="@color/white"
+                android:textColorHint="@color/colorBackgroundGrey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Confirm Email" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:background="@drawable/custom_edit_text"
-            android:padding="10dp"
-            android:textColorHint="@color/greyedOut"
-            android:textColor="@color/white"
-            android:hint="Enter Password"
-            android:id="@+id/passwordEntry"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_password_layout"
+            android:textColorHint="#BBB"
+            app:hintTextColor="#BBB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            app:layout_constraintBottom_toTopOf="@+id/passwordConfirm"
-            app:layout_constraintTop_toBottomOf="@+id/emailConfirm" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/input_password_confirm_layout"
+            app:layout_constraintTop_toBottomOf="@+id/input_email_confirm_layout">
+            <EditText android:id="@+id/input_password"
+                android:textColor="@color/white"
+                android:textColorHint="@color/colorBackgroundGrey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Password" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:background="@drawable/custom_edit_text"
-            android:padding="10dp"
-            android:textColorHint="@color/greyedOut"
-            android:textColor="@color/white"
-            android:hint="Confirm Password"
-            android:id="@+id/passwordConfirm"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_password_confirm_layout"
+            android:textColorHint="#BBB"
+            app:hintTextColor="#BBB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/input_password_layout"
+            app:layout_constraintTop_toBottomOf="@+id/button_layout">
+            <EditText android:id="@+id/input_password_confirm"
+                android:textColor="@color/white"
+                android:textColorHint="@color/colorBackgroundGrey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Confirm Password" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordEntry" />
+            app:layout_constraintTop_toBottomOf="@+id/input_password_confirm_layout"
+            android:gravity="right">
+            <Button
+                android:layout_gravity="right"
+                android:id="@+id/next_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_transparent_border"
+                android:text="Next"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 28
@@ -26,6 +27,7 @@ android {
 
 }
 
+
 dependencies {
     api "com.google.android.material:material:1.0.0"
     implementation 'com.github.johnhiott:DarkSkyApi:v0.1.5'
@@ -48,6 +50,14 @@ dependencies {
     implementation 'com.mafstech.libs:mafs-image-shape:1.0.4'
     implementation 'com.wang.avi:library:2.1.3'
 
+    // Add the Firebase SDK for Google Analytics
+    implementation 'com.google.firebase:firebase-analytics:17.0.1'
 
+    // Add the SDKs for any other Firebase products you want to use in your app
+    // For example, to use Firebase Authentication and Cloud Firestore
+    implementation 'com.google.firebase:firebase-auth:18.1.0'
+    implementation 'com.google.firebase:firebase-firestore:20.2.0'
+
+    implementation 'com.seatgeek:placesautocomplete:0.3-SNAPSHOT'
 
 }
