@@ -27,12 +27,14 @@ public class PlotsListAdapter extends ArrayAdapter<GardenPlot> {
     private Context mContext;
     private ArrayList<GardenPlot> plotList;
     private GardenFragment fragment;
+    private ArrayList<String> plotIDs;
 
 
-    public PlotsListAdapter(@NonNull Context context, ArrayList<GardenPlot> plots, GardenFragment fragment) {
+    public PlotsListAdapter(@NonNull Context context, ArrayList<GardenPlot> plots, ArrayList<String> ids, GardenFragment fragment) {
         super(context,0, plots);
         mContext = context;
         plotList = plots;
+        plotIDs = ids;
         this.fragment = fragment;
     }
 
@@ -71,6 +73,8 @@ public class PlotsListAdapter extends ArrayAdapter<GardenPlot> {
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("PLOT", plot);
+                bundle.putString("plot_id", plotIDs.get(position));
+
 
                 createPlotFragment.setArguments(bundle);
 

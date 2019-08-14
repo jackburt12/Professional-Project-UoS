@@ -16,8 +16,10 @@ import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import com3001.jb01026.finalyearproject.model.GardenPlot;
@@ -269,9 +271,11 @@ public class SunCalculations {
             }
 
         }
+        List<Double> azimuths = new ArrayList<>();
+        azimuths.add(rev(distance1.getAzimuth2()));
+        azimuths.add(rev(distance2.getAzimuth2()));
 
-        object.setAzimuths(new double[]{rev(distance1.getAzimuth2()), rev(distance2.getAzimuth2())});
-
+        object.setAzimuths(azimuths);
 
     }
 
@@ -295,9 +299,9 @@ public class SunCalculations {
             if(altitude > 0) {
                 for(ShadowObject object : plot.getShadowObjects()) {
 
-                    double[] azimuths = object.getAzimuths();
+                    List<Double> azimuths = object.getAzimuths();
 
-                    if(!(azimuth < azimuths[0] || azimuth > azimuths[1])) {
+                    if(!(azimuth < azimuths.get(0) || azimuth > azimuths.get(1))) {
                         if(calc_shadow_length(object.getHeight(), altitude) > object.getDistanceFromPlot()) {
                             shaded = true;
                         }
@@ -313,9 +317,21 @@ public class SunCalculations {
     }
 
     public double calc_max_sun_exposure_day (GardenPlot plot, Date date) {
+        for(ShadowObject object : plot.getShadowObjects()) {
+            if(object.getAzimuths() == null) {
+                calc_angles(plot, object);
+            }
+        }
+
+        calc_d(date);
+
         double totalHours = 0;
-        for (double d = 0; d < 24; d += 0.25) {
+
+        for(double d = 0; d < 24; d += 0.25) {
+            boolean shaded = false;
+            calc_SIDTIME(d);
             double altitude = calc_altitude();
+            double azimuth = calc_azimuth();
             if(altitude > 0) {
                 totalHours+=0.25;
             }
@@ -333,7 +349,6 @@ public class SunCalculations {
         Date date;
         for (int i = 1; i <= cal.getActualMaximum(Calendar.DATE); i++) {
             cal.set(year, month-1, i);
-            System.out.println("Day in month: "+i);
             date = cal.getTime();
 
             totalHours += calc_sun_exposure_day(plot, date);
@@ -352,7 +367,6 @@ public class SunCalculations {
         Date date;
         for (int i = 1; i <= cal.getActualMaximum(Calendar.DATE); i++) {
             cal.set(year, month-1, i);
-            System.out.println("Day in month: "+i);
             date = cal.getTime();
 
             totalHours += calc_max_sun_exposure_day(plot, date);
@@ -382,14 +396,17 @@ public class SunCalculations {
         return totalHours;
     }
 
-    public int calc_shade_rading(GardenPlot plot) {
+    public int calc_shade_rating(GardenPlot plot) {
+
+
 
         double maxSun = calc_max_sun_exposure_year(plot);
         double actualSun = calc_sun_exposure_year(plot);
 
-        double difference = maxSun - actualSun;
 
-        int rating = (int)Math.round(difference/maxSun*100);
+        int rating = (int)Math.round(actualSun/maxSun*100);
+
+        Log.v("SHADE RATING", Integer.toString(rating));
 
         return rating;
     }

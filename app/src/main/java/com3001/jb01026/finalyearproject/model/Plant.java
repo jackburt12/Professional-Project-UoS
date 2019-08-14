@@ -15,10 +15,12 @@ public class Plant implements Serializable {
 
     private boolean isChecked;
 
-    public Plant(String name, PlantType type, String imageID, String description, PlotSize plotSize, CareFrequency careFrequency, Expertise expertise, String monthByMonth) {
+    public Plant() {}
+
+    public Plant(String name, PlantType type, String image, String description, PlotSize plotSize, CareFrequency careFrequency, Expertise expertise, String monthByMonth) {
         this.name = name;
         this.type = type;
-        this.image = imageID;
+        this.image = image;
         this.description = description;
         this.plotSize = plotSize;
         this.careFrequency = careFrequency;
@@ -26,10 +28,10 @@ public class Plant implements Serializable {
         this.monthByMonth = monthByMonth;
     }
 
-    public Plant (String name, PlantType type, String imageID) {
+    public Plant (String name, PlantType type, String image) {
         this.name = name;
         this.type = type;
-        this.image = imageID;
+        this.image = image;
     }
 
     public String getName() {
@@ -40,7 +42,7 @@ public class Plant implements Serializable {
         return type;
     }
 
-    public String getImageID() {
+    public String getImage() {
         return image;
     }
 
@@ -76,4 +78,38 @@ public class Plant implements Serializable {
     public void setChecked(boolean checked) {
         isChecked = checked;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(PlantType type) {
+        this.type = type;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPlotSize(PlotSize plotSize) {
+        this.plotSize = plotSize;
+    }
+
+    public void setCareFrequency(CareFrequency careFrequency) {
+        this.careFrequency = careFrequency;
+    }
+
+    public void setExpertise(Expertise expertise) {
+        this.expertise = expertise;
+    }
+
+    public void setMonthByMonth(String monthByMonth) {
+        this.monthByMonth = monthByMonth;
+    }
+
+
 }

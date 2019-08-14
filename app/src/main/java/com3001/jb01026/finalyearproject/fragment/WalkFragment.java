@@ -17,10 +17,8 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +40,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -74,7 +77,7 @@ public class WalkFragment extends Fragment implements LocationListener {
     View loadingOverlay;
 
     private Walk walk;
-    private Button endWalk;
+    private Button endWalk, favouriteWalk;
     MapView mMapView;
     private GoogleMap googleMap;
 
@@ -121,12 +124,15 @@ public class WalkFragment extends Fragment implements LocationListener {
     private int tasksFinished = 0;
     private int taskCount = 0;
 
+    FirebaseFirestore firedb = FirebaseFirestore.getInstance();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser fireUser = mAuth.getCurrentUser();
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_walk, container, false);
-        Bundle bundle = getArguments();
-        walk = (Walk) bundle.getSerializable("WALK");
-
 
         LinearLayout linearLayoutBSheet = rootView.findViewById(R.id.bottom_sheet);
         loadingOverlay = rootView.findViewById(R.id.loading_screen);
@@ -135,7 +141,17 @@ public class WalkFragment extends Fragment implements LocationListener {
         bottomSheetBehavior = BottomSheetBehavior.from(linearLayoutBSheet);
         toggleButton = rootView.findViewById(R.id.toggle_button);
         endWalk = rootView.findViewById(R.id.end_walk_button);
+        favouriteWalk = rootView.findViewById(R.id.favourite_walk_button);
         walkRemaining = rootView.findViewById(R.id.time_distance);
+
+        Bundle bundle = getArguments();
+
+        walk = (Walk) bundle.getSerializable("WALK_fav");
+        if(walk!=null) {
+            favouriteWalk.setVisibility(View.GONE);
+        } else {
+            walk = (Walk) bundle.getSerializable("WALK");
+        }
 
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -164,6 +180,22 @@ public class WalkFragment extends Fragment implements LocationListener {
             }
         });
 
+        favouriteWalk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firedb.collection("users").document(fireUser.getUid()).collection("walks").add(walk).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getContext(),"Added walk to favourites.",Toast.LENGTH_SHORT).show();
+                        WalksFragment fragment = (WalksFragment)getActivity().getSupportFragmentManager().findFragmentByTag("walks");
+                        fragment.getListItems();
+                        favouriteWalk.setVisibility(View.GONE);
+
+                    }
+                });
+            }
+        });
+
         endWalk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,6 +208,10 @@ public class WalkFragment extends Fragment implements LocationListener {
                         dialog.dismiss();
                         //getActivity().getSupportFragmentManager().popBackStack();
                         Fragment fragment = getActivity().getSupportFragmentManager().findFragmentByTag("walking");
+                        Fragment fragment2 = getActivity().getSupportFragmentManager().findFragmentByTag("create_walk");
+                        if(fragment2!=null) {
+                            getActivity().getSupportFragmentManager().beginTransaction().remove(fragment2).commit();
+                        }
                         if(fragment != null)
                             getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
 
@@ -239,13 +275,8 @@ public class WalkFragment extends Fragment implements LocationListener {
 
         });
 
-
         locationManager = (LocationManager)this.getActivity().getSystemService(Context.LOCATION_SERVICE);
         getLocation();
-
-
-
-
 
         return rootView;
     }
@@ -555,7 +586,7 @@ public class WalkFragment extends Fragment implements LocationListener {
     //TODO: I'm wasting too much time on this shit so am going to leave it for now but it doesn't exactly look amazing
     public Bitmap createCustomMarker(Context context, Plant plant) {
 
-        String s = "img_" + plant.getImageID();
+        String s = "img_" + plant.getImage();
 
         int expectedHeight = 150;
         int expectedWidth = 100;

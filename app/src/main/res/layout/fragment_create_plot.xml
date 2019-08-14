@@ -161,21 +161,40 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1">
+
         <Button
-            android:textSize="18dp"
-            android:text="Create Plot"
             android:id="@+id/create_plot_button"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_gravity="bottom"
             android:backgroundTint="@color/colorPrimary"
+            android:gravity="center"
+            android:text="Create Plot"
             android:textColor="@color/white"
-            android:layout_gravity="bottom"/>
-    </RelativeLayout>
+            android:textSize="18dp"
+            app:layout_constraintEnd_toStartOf="@+id/delete_plot_button"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/delete_plot_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:backgroundTint="#F68A7E"
+            android:gravity="center"
+            android:text="Delete Plot"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/create_plot_button" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
 

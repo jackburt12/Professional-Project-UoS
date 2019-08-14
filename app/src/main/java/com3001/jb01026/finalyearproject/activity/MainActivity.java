@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private String userName;
-    private LatLng userLocation;
+    public String userName;
+    public LatLng userLocation;
 
     TextView hello;
 
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                     if(manager.findFragmentByTag("walks")!=null) {
                         manager.beginTransaction().show(Objects.requireNonNull(manager.findFragmentByTag("walks"))).commit();
                     } else {
-                        manager.beginTransaction().add(R.id.main_container, new CreateWalkFragment(), "walks").commit();
+                        manager.beginTransaction().add(R.id.main_container, new WalksFragment(), "walks").commit();
                     }
 
                     if(manager.findFragmentByTag("encyclopedia")!=null) {

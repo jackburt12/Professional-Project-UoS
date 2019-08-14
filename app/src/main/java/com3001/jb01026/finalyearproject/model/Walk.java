@@ -7,6 +7,8 @@ public class Walk implements Serializable {
     private double minDistance, maxDistance;
     private List<Plant> pointList;
 
+    public Walk() {}
+
     public Walk(double minDistance, double maxDistance, List<Plant> pointList) {
         this.minDistance = minDistance;
         this.maxDistance = maxDistance;

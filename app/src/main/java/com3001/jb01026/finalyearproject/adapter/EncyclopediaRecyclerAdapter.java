@@ -1,7 +1,6 @@
 package com3001.jb01026.finalyearproject.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import com.turingtechnologies.materialscrollbar.INameableAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -25,7 +23,6 @@ import com3001.jb01026.finalyearproject.R;
 import com3001.jb01026.finalyearproject.activity.MainActivity;
 import com3001.jb01026.finalyearproject.model.Plant;
 import com3001.jb01026.finalyearproject.model.PlantType;
-import com3001.jb01026.finalyearproject.model.PlotSize;
 
 public class EncyclopediaRecyclerAdapter extends RecyclerView.Adapter<EncyclopediaRecyclerAdapter.CustomViewHolder> implements INameableAdapter, Filterable {
 
@@ -326,7 +323,7 @@ public class EncyclopediaRecyclerAdapter extends RecyclerView.Adapter<Encycloped
         } else {
             holder.name.setText(p.getName());
             holder.type.setText(p.getType().toString());
-            String s = "tn_" + getValidList().get(position).getImageID();
+            String s = "tn_" + getValidList().get(position).getImage();
             holder.thumbnail.setImageResource(context.getResources().getIdentifier(s, "drawable", context.getPackageName()));
         }
 

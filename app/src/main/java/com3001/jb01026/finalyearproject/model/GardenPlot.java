@@ -16,6 +16,8 @@ public class GardenPlot implements Serializable {
         this.length = length;
     }
 
+    public GardenPlot() {}
+
     public double getWidth() {
         return width;
     }

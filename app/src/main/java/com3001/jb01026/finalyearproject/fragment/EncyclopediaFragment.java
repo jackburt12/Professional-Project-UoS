@@ -248,11 +248,9 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
                         }
                     }
                 }
-                CreateWalkFragment createWalkFragment = (CreateWalkFragment) getActivity().getSupportFragmentManager().findFragmentByTag("walks");
+                CreateWalkFragment createWalkFragment = (CreateWalkFragment) getActivity().getSupportFragmentManager().findFragmentByTag("create_walk");
                 createWalkFragment.UpdateList(pointsChosen);
                 getActivity().getSupportFragmentManager().popBackStack();
-
-
 
             });
 

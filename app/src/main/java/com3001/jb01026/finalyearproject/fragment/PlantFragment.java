@@ -1,21 +1,15 @@
 package com3001.jb01026.finalyearproject.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Arrays;
-import java.util.List;
-
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com3001.jb01026.finalyearproject.R;
 import com3001.jb01026.finalyearproject.model.Plant;
-import com3001.jb01026.finalyearproject.model.PlotSize;
 
 public class PlantFragment extends Fragment {
 
@@ -47,7 +41,7 @@ public class PlantFragment extends Fragment {
         plantTitleTV.setText(plant.getName());
         plantDescriptionTV.setText(plant.getDescription());
 
-        String s = "img_" + plant.getImageID();
+        String s = "img_" + plant.getImage();
         plantImageIV.setImageResource(getContext().getResources().getIdentifier(s, "drawable", getContext().getPackageName()));
 
         plotFieldTV = view.findViewById(R.id.plot_field);

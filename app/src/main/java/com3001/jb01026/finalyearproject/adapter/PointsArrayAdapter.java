@@ -43,7 +43,7 @@ public class PointsArrayAdapter extends ArrayAdapter<Plot> {
         Plot plot = plotList.get(position);
 
         ImageView image = point.findViewById(R.id.point_of_interest_icon);
-        String s = "img_" + plot.getPlant().getImageID();
+        String s = "img_" + plot.getPlant().getImage();
         image.setImageResource(mContext.getResources().getIdentifier(s, "drawable", mContext.getPackageName()));
 
         TextView name = point.findViewById(R.id.point_name);

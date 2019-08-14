@@ -210,6 +210,7 @@ public class CreateWalkFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.create_walk_layout, walkFragment, POINTS_FRAGMENT)
                         .commit();
+
             } else {
                 Toast.makeText(getContext(),"Please add some points of interest first!",Toast.LENGTH_SHORT).show();
 
