@@ -595,4 +595,8 @@
 
     </LinearLayout>
 
+
+    <include layout="@layout/loading_screen"/>
+
+
 </LinearLayout>
