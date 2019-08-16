@@ -274,10 +274,6 @@ public class WalkFragment extends Fragment implements LocationListener {
 
 
         });
-
-        locationManager = (LocationManager)this.getActivity().getSystemService(Context.LOCATION_SERVICE);
-        getLocation();
-
         return rootView;
     }
 
@@ -412,7 +408,6 @@ public class WalkFragment extends Fragment implements LocationListener {
 
             tasksFinished++;
 
-            //TODO: Change this to a dynamically updating task count, what I did was getting the task count before it was finished counting them all (after first task had completed)
             if(tasksFinished == taskCount) {
                 if(bestRoute == null) {
                     Toast.makeText(getContext(),"No route that satisfies requirements! Please modify points or distance restrictions.",Toast.LENGTH_SHORT).show();
@@ -475,90 +470,60 @@ public class WalkFragment extends Fragment implements LocationListener {
             nf.nFor(depth);
         }
 
-
-//
-//        while(directionsHelper.getStatus() == AsyncTask.Status.RUNNING) {
-//            //do nothing
-//        }
-//
-//        PopulatePointsList();
-//
-//        //TODO: entrance should probably be something else, maybe they can pick a start point or from their lcoation
-//        DrawPolyLine(googleMap, bestRoute);
-
-
-//        tempRoute = new ArrayList<>();
-//
-//        tempRoute.add(plots.get(4));
-//        tempRoute.add(plots.get(2));
-//        tempRoute.add(plots.get(23));
-//        tempRoute.add(plots.get(27));
-//        tempRoute.add(plots.get(28));
-
-
-
-
-//        directionsHelper = new DirectionsHelper(asyncResponse, entrance, tempRoute);
-//        directionsHelper.execute();
-
-//        for (int i = 0; i < pointsOfInterest.size(); i++) {
-//            pointsOfInterest.get(i);
-//        }
-
-
-
     }
 
-    private void getLocation() {
-        try {
-            if (canGetLocation) {
-                if (isGPS) {
-                    // from GPS
-                    locationManager.requestLocationUpdates(
-                            LocationManager.GPS_PROVIDER,
-                            MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+    /**
+     * Ended up not implementing any user movement functions due to lack of time
+     * this method works for getting location but is unused
+     */
 
-                    if (locationManager != null) {
-                        loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        if (loc != null)
-                            latlng = new LatLng(loc.getLatitude(), loc.getLongitude());
-                    }
-                } else if (isNetwork) {
-                    // from Network Provider
-                    locationManager.requestLocationUpdates(
-                            LocationManager.NETWORK_PROVIDER,
-                            MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-
-                    if (locationManager != null) {
-                        loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (loc != null)
-                            latlng = new LatLng(loc.getLatitude(), loc.getLongitude());
-                    }
-                } else {
-//                    loc.setLatitude(0);
-//                    loc.setLongitude(0);
-//                    latlng = new LatLng(loc.getLatitude(), loc.getLongitude());
-                    // from Network Provider
-                    locationManager.requestLocationUpdates(
-                            LocationManager.NETWORK_PROVIDER,
-                            MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-
-                    if (locationManager != null) {
-                        loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (loc != null)
-                            latlng = new LatLng(loc.getLatitude(), loc.getLongitude());
-                    }
-                }
-            } else {
-                //Can't get location
-            }
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void getLocation() {
+//        try {
+//            if (canGetLocation) {
+//                if (isGPS) {
+//                    // from GPS
+//                    locationManager.requestLocationUpdates(
+//                            LocationManager.GPS_PROVIDER,
+//                            MIN_TIME_BW_UPDATES,
+//                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+//
+//                    if (locationManager != null) {
+//                        loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//                        if (loc != null)
+//                            latlng = new LatLng(loc.getLatitude(), loc.getLongitude());
+//                    }
+//                } else if (isNetwork) {
+//                    // from Network Provider
+//                    locationManager.requestLocationUpdates(
+//                            LocationManager.NETWORK_PROVIDER,
+//                            MIN_TIME_BW_UPDATES,
+//                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+//
+//                    if (locationManager != null) {
+//                        loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//                        if (loc != null)
+//                            latlng = new LatLng(loc.getLatitude(), loc.getLongitude());
+//                    }
+//                } else {
+//                    // from Network Provider
+//                    locationManager.requestLocationUpdates(
+//                            LocationManager.NETWORK_PROVIDER,
+//                            MIN_TIME_BW_UPDATES,
+//                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+//
+//                    if (locationManager != null) {
+//                        loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//                        if (loc != null)
+//                            latlng = new LatLng(loc.getLatitude(), loc.getLongitude());
+//                    }
+//                }
+//            } else {
+//                //Can't get location
+//            }
+//        } catch (SecurityException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
 
@@ -583,7 +548,7 @@ public class WalkFragment extends Fragment implements LocationListener {
     public void onProviderDisabled(String provider) {
 
     }
-    //TODO: I'm wasting too much time on this shit so am going to leave it for now but it doesn't exactly look amazing
+
     public Bitmap createCustomMarker(Context context, Plant plant) {
 
         String s = "img_" + plant.getImage();

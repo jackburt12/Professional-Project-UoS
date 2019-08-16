@@ -170,8 +170,6 @@ public class GardenPlotFragment extends Fragment {
         Date todayDate = cal.getTime();
 
         long unixTimestamp = todayDate.getTime()/1000;
-        //unixTimestamp = 1565395200 + 43000;
-
 
         RequestBuilder weatherToday = new RequestBuilder();
 
@@ -215,13 +213,6 @@ public class GardenPlotFragment extends Fragment {
             weather.getWeather(request, new Callback<WeatherResponse>() {
                 @Override
                 public void success(WeatherResponse weatherResponse, Response response) {
-                    //Do something
-
-//                    temperatureList.add(weatherResponse.getDaily().getData().get(0).getTemperatureMax());
-//
-//                    double rainfall = Double.parseDouble(weatherResponse.getDaily().getData().get(0).getPrecipProbability());
-//                    rainfallList.add(rainfall);
-
 
                     long time = weatherResponse.getDaily().getData().get(0).getTime();
                     temperatureMap.put(time,weatherResponse.getDaily().getData().get(0).getTemperatureMax());

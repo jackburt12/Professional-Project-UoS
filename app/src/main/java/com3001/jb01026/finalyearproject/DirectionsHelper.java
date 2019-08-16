@@ -38,6 +38,17 @@ public class DirectionsHelper extends AsyncTask<Route, String, String> {
     private ArrayList<Plot> plots;
     private GoogleMap map;
 
+    /**
+     *   decodePoly() method lifted directly from a response on the following StackOverflow thread:
+     *   https://stackoverflow.com/questions/47492459/how-do-i-draw-a-route-along-an-existing-road-between-two-points
+     *
+     *   extremely similar methods can be found in many different locations, and it seems as if this is more or less
+     *   template code that is almost always used when dealing with the Directions API
+     *
+     *   as explained in the report, much of this code can be attributed to Google's Directions API developer guide
+     *   with parts taking inspiration from code found on stack overflow - primarily the question/answers from the thread linked above
+     *
+     **/
 
     public DirectionsHelper(AsyncResponse delegate) {
         this.delegate = delegate;
