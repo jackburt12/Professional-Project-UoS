@@ -447,6 +447,11 @@ public class WalkFragment extends Fragment implements LocationListener {
         int count = 2;
 
         taskCount = (int)Math.pow(count, numPoints);
+        
+        /**
+        * Credit to https://stackoverflow.com/questions/426878/is-there-any-way-to-do-n-level-nested-loops-in-java 
+        * for the code to do with the recursive method
+        */
 
         for (int i = 0; i < numPoints + 1; i++) {
             final int depth = i;
@@ -548,6 +553,10 @@ public class WalkFragment extends Fragment implements LocationListener {
     public void onProviderDisabled(String provider) {
 
     }
+    /**
+    *   Most of the code for creating a custom marker for the google map was pieced together from various StackOverflow answers
+    *   relevant to the topic, and has just been adapted for my Plant objects and drawable resources.
+    */
 
     public Bitmap createCustomMarker(Context context, Plant plant) {
 
