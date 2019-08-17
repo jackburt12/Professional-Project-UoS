@@ -7,7 +7,8 @@
     tools:context=".fragment.CreatePlotFragment"
     android:orientation="vertical"
     android:background="@color/colorBackgroundGrey"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:clickable="true">
 
     <LinearLayout
         android:padding="20dp"

@@ -18,9 +18,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -75,6 +77,7 @@ public class WalkFragment extends Fragment implements LocationListener {
     private static final long MIN_TIME_BW_UPDATES = 1000 * 15; // 1 minute
 
     View loadingOverlay;
+    LinearLayout linearLayoutBSheet;
 
     private Walk walk;
     private Button endWalk, favouriteWalk;
@@ -134,7 +137,8 @@ public class WalkFragment extends Fragment implements LocationListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_walk, container, false);
 
-        LinearLayout linearLayoutBSheet = rootView.findViewById(R.id.bottom_sheet);
+        linearLayoutBSheet = rootView.findViewById(R.id.bottom_sheet);
+        linearLayoutBSheet.setVisibility(View.GONE);
         loadingOverlay = rootView.findViewById(R.id.loading_screen);
         loadingOverlay.setVisibility(View.VISIBLE);
 
@@ -145,6 +149,8 @@ public class WalkFragment extends Fragment implements LocationListener {
         walkRemaining = rootView.findViewById(R.id.time_distance);
 
         Bundle bundle = getArguments();
+
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
         walk = (Walk) bundle.getSerializable("WALK_fav");
         if(walk!=null) {
@@ -274,6 +280,7 @@ public class WalkFragment extends Fragment implements LocationListener {
 
 
         });
+
         return rootView;
     }
 
@@ -653,5 +660,13 @@ public class WalkFragment extends Fragment implements LocationListener {
         );
 
         loadingOverlay.setVisibility(View.GONE);
+        linearLayoutBSheet.setVisibility(View.VISIBLE);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        }, 500);   //5 seconds
+
     }
 }

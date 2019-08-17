@@ -172,8 +172,6 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
 
         filterButton.setOnClickListener(new View.OnClickListener() {
 
-            boolean drawerOpen = false;
-
             @Override
             public void onClick(View v) {
                 filterDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN, GravityCompat.END);
@@ -265,7 +263,7 @@ public class EncyclopediaFragment extends Fragment implements NavigationView.OnN
             public void onClick(View v) {
                 getCheckboxFilters();
                 UpdateFilter(searchQuery + "|" + checkBoxFilterQuery);
-
+                filterDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.END);
             }
         });
 

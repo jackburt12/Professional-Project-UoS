@@ -26,7 +26,7 @@
 
             <ToggleButton
                 android:id="@+id/toggle_button"
-                android:background="@drawable/ic_chervon_up"
+                android:background="@drawable/toggle_chevron"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textOn=""

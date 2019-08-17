@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import com3001.jb01026.finalyearproject.R;
+import com3001.jb01026.finalyearproject.activity.MainActivity;
 import com3001.jb01026.finalyearproject.model.Plant;
 
 public class PlantFragment extends Fragment {
@@ -26,6 +27,9 @@ public class PlantFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((MainActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_plant, container, false);
 
@@ -53,40 +57,48 @@ public class PlantFragment extends Fragment {
         careFieldTV.setText(plant.getCareFrequency().toString());
         expertiseFieldTV.setText(plant.getExpertise().toString());
 
-        View v =  view.findViewById(R.id.months);
+        View v = view.findViewById(R.id.months);
 
         String[] monSplit = plant.getMonthByMonth().split("/");
         char[] plantMonthsChar = monSplit[0].toCharArray();
         char[] harvestMonthsChar = monSplit[1].toCharArray();
 
-        int[] plantMonths = new int[]{0,0,0,0,0,0,0,0,0,0,0,0};
-        int[] harvestMonths = new int[]{0,0,0,0,0,0,0,0,0,0,0,0};
+        int[] plantMonths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        int[] harvestMonths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 
-
-        for(int i = 0; i < plantMonthsChar.length; i++){
-            plantMonths[Integer.parseInt(Character.toString(plantMonthsChar[i]), 16)-1] = 1;
+        for (int i = 0; i < plantMonthsChar.length; i++) {
+            plantMonths[Integer.parseInt(Character.toString(plantMonthsChar[i]), 16) - 1] = 1;
         }
 
-        for(int i = 0; i< harvestMonthsChar.length; i++){
-            harvestMonths[Integer.parseInt(Character.toString(harvestMonthsChar[i]), 16)-1] = 1;
+        for (int i = 0; i < harvestMonthsChar.length; i++) {
+            harvestMonths[Integer.parseInt(Character.toString(harvestMonthsChar[i]), 16) - 1] = 1;
         }
 
-        for(int i = 0; i<12; i++) {
-            View circleToChange = ((ViewGroup)((ViewGroup)monthByMonth).getChildAt(i)).getChildAt(1);
+        for (int i = 0; i < 12; i++) {
+            View circleToChange = ((ViewGroup) ((ViewGroup) monthByMonth).getChildAt(i)).getChildAt(1);
 
-            if(plantMonths[i] == 1) {
-                if(harvestMonths[i] == 1) {
+            if (plantMonths[i] == 1) {
+                if (harvestMonths[i] == 1) {
                     circleToChange.setBackgroundResource(R.drawable.both_circle);
                 } else {
                     circleToChange.setBackgroundResource(R.drawable.plant_circle);
 
                 }
-            } else if(harvestMonths[i] == 1) {
+            } else if (harvestMonths[i] == 1) {
                 circleToChange.setBackgroundResource(R.drawable.harvest_circle);
             }
         }
 
+
         return view;
     }
+
+    @Override
+    public void onDestroyView() {
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        super.onDestroyView();
+    }
+
+
 }

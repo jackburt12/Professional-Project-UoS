@@ -33,9 +33,10 @@ import com3001.jb01026.finalyearproject.R;
 import com3001.jb01026.finalyearproject.fragment.CreateWalkFragment;
 import com3001.jb01026.finalyearproject.fragment.EncyclopediaFragment;
 import com3001.jb01026.finalyearproject.fragment.GardenFragment;
+import com3001.jb01026.finalyearproject.fragment.PlantFragment;
 import com3001.jb01026.finalyearproject.fragment.WalksFragment;
 
-public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
+public class MainActivity extends AppCompatActivity {
 
     public boolean creatingWalk = false;
     private boolean inEncyclopedia = false;
@@ -101,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                         manager.beginTransaction().hide(Objects.requireNonNull(manager.findFragmentByTag("walks"))).commit();
                     }
 
-                    getSupportFragmentManager().addOnBackStackChangedListener(this);
                     inEncyclopedia = true;
 
 
@@ -126,12 +126,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
                     break;
             }
-            if(!inEncyclopedia) {
-                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-            } else {
-                boolean canGoBack = getSupportFragmentManager().getBackStackEntryCount()>0;
-                getSupportActionBar().setDisplayHomeAsUpEnabled(canGoBack);
-            }
+
             return true;
         });
 
@@ -153,12 +148,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     }
 
     @Override
-    public void onBackStackChanged() {
-        boolean canGoBack = getSupportFragmentManager().getBackStackEntryCount()>0;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(canGoBack);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case android.R.id.home:
@@ -169,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                     Fragment fragment = getSupportFragmentManager().findFragmentByTag("plant");
                     if(fragment != null)
                         getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 }
                 return true;
             case R.id.logout:

@@ -11,6 +11,14 @@ import com.esri.arcgisruntime.geometry.LinearUnit;
 import com.esri.arcgisruntime.geometry.LinearUnitId;
 import com.esri.arcgisruntime.geometry.Point;
 import com.esri.arcgisruntime.geometry.SpatialReferences;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.text.SimpleDateFormat;
 import java.time.Month;
@@ -22,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import androidx.annotation.NonNull;
 import com3001.jb01026.finalyearproject.model.GardenPlot;
 import com3001.jb01026.finalyearproject.model.Plot;
 import com3001.jb01026.finalyearproject.model.ShadowObject;
@@ -31,10 +40,27 @@ public class SunCalculations {
     double longitude;
     double latitude;
 
+    FirebaseFirestore firedb = FirebaseFirestore.getInstance();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser fireUser = mAuth.getCurrentUser();
+
     public SunCalculations() {
 
-        longitude = -0.5728;
-        latitude = 51.25132;
+        firedb.collection("users").document(fireUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    GeoPoint geoPoint = document.getGeoPoint("location");
+                    longitude = geoPoint.getLongitude();
+                    latitude = geoPoint.getLatitude();
+
+                } else {
+                    Log.w("FIREBASE ERROR", "Could not get location!", task.getException());
+
+                }
+            }
+        });
 
     }
 
@@ -251,6 +277,8 @@ public class SunCalculations {
 
             } else {
                 //middle
+                object.setAzimuths(null);
+                return;
             }
         } else {
             if (shadowObjectPoint.getY() > upLeft.getY()) {
@@ -280,12 +308,16 @@ public class SunCalculations {
     }
 
     public double calc_sun_exposure_day(GardenPlot plot, Date date) {
-
-        for(ShadowObject object : plot.getShadowObjects()) {
-            if(object.getAzimuths() == null) {
-                calc_angles(plot, object);
+        if(plot.getShadowObjects()!=null) {
+            for(ShadowObject object : plot.getShadowObjects()) {
+                if(object.getAzimuths() == null) {
+                    calc_angles(plot, object);
+                }
             }
+        } else {
+            return calc_max_sun_exposure_day(plot, date);
         }
+
 
         calc_d(date);
 
@@ -300,10 +332,11 @@ public class SunCalculations {
                 for(ShadowObject object : plot.getShadowObjects()) {
 
                     List<Double> azimuths = object.getAzimuths();
-
-                    if(!(azimuth < azimuths.get(0) || azimuth > azimuths.get(1))) {
-                        if(calc_shadow_length(object.getHeight(), altitude) > object.getDistanceFromPlot()) {
-                            shaded = true;
+                    if(azimuths!=null) {
+                        if(!(azimuth < azimuths.get(0) || azimuth > azimuths.get(1))) {
+                            if(calc_shadow_length(object.getHeight(), altitude) > object.getDistanceFromPlot()) {
+                                shaded = true;
+                            }
                         }
                     }
                 }
@@ -317,9 +350,11 @@ public class SunCalculations {
     }
 
     public double calc_max_sun_exposure_day (GardenPlot plot, Date date) {
-        for(ShadowObject object : plot.getShadowObjects()) {
-            if(object.getAzimuths() == null) {
-                calc_angles(plot, object);
+        if(plot.getShadowObjects()!=null) {
+            for(ShadowObject object : plot.getShadowObjects()) {
+                if(object.getAzimuths() == null) {
+                    calc_angles(plot, object);
+                }
             }
         }
 
@@ -328,10 +363,8 @@ public class SunCalculations {
         double totalHours = 0;
 
         for(double d = 0; d < 24; d += 0.25) {
-            boolean shaded = false;
             calc_SIDTIME(d);
             double altitude = calc_altitude();
-            double azimuth = calc_azimuth();
             if(altitude > 0) {
                 totalHours+=0.25;
             }
@@ -405,8 +438,6 @@ public class SunCalculations {
 
 
         int rating = (int)Math.round(actualSun/maxSun*100);
-
-        Log.v("SHADE RATING", Integer.toString(rating));
 
         return rating;
     }

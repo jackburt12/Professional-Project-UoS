@@ -110,5 +110,11 @@
             android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 
+    <TextView
+        android:padding="10dp"
+        android:text="Both 'Distance from Plot' and 'Angle from Plot' are measured from the center of the plot.\n\nIf the 'Distance from Plot' does not exceed the edges of the plot, the object will be ignored in calculations."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>
